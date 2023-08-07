@@ -1,0 +1,144 @@
+@import url('color.css');
+
+:root {
+  --wide: 40rem;
+  --pad: 0.25rem;
+  --pad2: calc(2* var(--pad));
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    color: var(--fg);
+}
+
+label {
+  display: none;
+}
+
+input {
+    border:none;
+    outline: none;
+    flex-grow: 1;
+    width: 5em;
+    caret-color: var(--uopblue);
+    background: var(--bg);
+    color: var(--fg);
+}
+
+#filter {
+  font-size: 2rem;
+}
+
+#clear {
+  font-size: 3rem;
+  border: none;
+  cursor: pointer;
+}
+
+header, input {
+    column-span: all;
+}
+
+header {
+    padding: var(--pad2);
+    max-width: var(--wide);
+    width: 100%;
+}
+
+header nav {
+    display: flex;
+    width: 100%;
+}
+  
+  main {
+    display: grid;
+    height: 30vh;
+    grid-template-columns: repeat(5, 1fr); 
+    grid-auto-rows: 50px;
+    gap: 2rem;
+    border: 1px solid black;
+    border-radius: 10px;
+  }
+
+  main, header {
+    padding: var(--pad2);
+    margin: 0 auto;
+    max-width: var(--wide);
+    width: 100%;
+}
+
+  main > .file {
+    paddin:10px;
+    margin:10%;
+    width: 100%;
+    height: 100%;
+    background-color: blue;
+    border-radius: 10px;
+  }
+
+  main > .dragged {
+    transform: scale(1.10);
+    background-color: green;
+    opacity: 0.3;
+  }
+  
+  .file {
+    display: flex;
+    border: 2px solid black;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    height: 60px;
+    background-color: blue;
+    border-radius: 10px;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+  }
+
+  .file:hover {
+    scale: 1.2;
+  }
+
+  .ref {
+    white-space: nowrap;
+    text-decoration: none;
+    color: black;
+    align-self: flex-end;
+  }
+
+  .editorFile {
+    position:relative;
+    display: grid;
+    grid-template-columns: 2fr;
+    grid-auto-rows: auto;
+    grid-gap: 2px;
+    background-color: white;
+    border-radius: 5px;
+    border: 3px solid black;
+    padding:5px;
+  }
+
+  .inputs {
+    grid-column:2;
+    padding:5px;
+    max-height: 100%;
+  }
+  
+  .names {
+    grid-column:1;
+    color:black;
+  }
+  
+  .text {
+    color:black;
+  }
+  
