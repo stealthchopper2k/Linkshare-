@@ -70,7 +70,7 @@ export function uiPosition(parent, child, element) {
 // on drop we change positions with whatever is dropped
 export function swapIndexPositions(links, oldIndex, newIndex) {
   if (oldIndex !== newIndex) {
-    const oldItem = links.splice(oldIndex, 1);
+    const oldItem = links.splice(oldIndex, 1)[0];
     links.splice(newIndex, 0, oldItem);
   }
 }
