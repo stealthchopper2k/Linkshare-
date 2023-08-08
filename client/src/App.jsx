@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import SignIn from './login/signin.js';
-import SignUp from './login/signup.js';
+import SignIn from './login/signin.jsx';
+import SignUp from './login/signup.jsx';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ResetPassword from './login/reset';
-import HomePage from './home/home.js';
+import ResetPassword from './login/reset.jsx';
+import HomePage from './home/home.jsx';
 import './style.css';
 
 export default function App() {
