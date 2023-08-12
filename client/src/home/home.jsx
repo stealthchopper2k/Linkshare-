@@ -2,6 +2,8 @@ import React, { useRef } from 'react';
 import { useInView, motion } from 'framer-motion';
 import panelImage from '../images/LS2.png?as=webp';
 import dragDrop from '../images/dragdrop.png?as=webp';
+import Grant from '../images/Grant.png?as=webp';
+import Instruct from '../images/INSTRUCT.png?as=webp';
 import ImageList from './ImageList.jsx';
 import { HomeBtns } from './RegBtn.jsx';
 
@@ -21,14 +23,17 @@ export default function HomePage() {
           type: 'spring',
           stiffness: 260,
           damping: 20,
-        }} className="flex flex-row w-full h-full gap-10">
-        <div className="flex flex-col flex-shrink-1 items-center justify-center w-1/4 bg-black border-r-4 border-white">
-          <h1 className="text-6xl text-white font-roboto whitespace-normal text-center mb-24">
-          Designated Resources at your hands!
-          </h1>
+        }} className="flex flex-row w-full h-full">
+        <div className="flex flex-col flex-shrink-1 items-center justify-center w-2/5 bg-black border-r-4 border-white">
+          <div className="text-white font-roboto whitespace-normal text-center mb-6">
+            <h1 className="text-6xl mb-6 flex-shrink-1">
+              Designated URL pages at your hands!
+            </h1>
+            <span className="text-white text-2xl">Create and collaborate on improved hyperlink collections!</span>
+          </div>
           <HomeBtns />
         </div>
-        <ImageList images={[dragDrop, panelImage]} />
+        <ImageList images={[dragDrop, panelImage, Grant, Instruct]} />
       </motion.div>
     </div>
   );
