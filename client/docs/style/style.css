@@ -3,28 +3,28 @@
 :root {
   --wide: 30rem;
   --pad: 0.25rem;
-  --pad2: calc(2* var(--pad));
+  --pad2: calc(2 * var(--pad));
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: sans-serif;
-    display: flex;
-    flex-direction: column;
-    background: var(--bg);
-    color: var(--fg);
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--fg);
 }
 
 main {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    min-height:200px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  min-height: 200px;
 }
 
 label {
@@ -32,13 +32,13 @@ label {
 }
 
 input {
-    border:none;
-    outline: none;
-    flex-grow: 1;
-    width: 5em;
-    caret-color: var(--uopblue);
-    background: var(--bg);
-    color: var(--fg);
+  border: none;
+  outline: none;
+  flex-grow: 1;
+  width: 5em;
+  caret-color: var(--uopblue);
+  background: var(--bg);
+  color: var(--fg);
 }
 
 #filter {
@@ -51,42 +51,42 @@ input {
   cursor: pointer;
 }
 
-header, input {
-    column-span: all;
+header,
+input {
+  column-span: all;
 }
 
-main, header {
-    padding: var(--pad2);
-    margin: 0 auto;
-    max-width: var(--wide);
-    width: 100%;
+main,
+header {
+  padding: var(--pad2);
+  margin: 0 auto;
+  max-width: var(--wide);
+  width: 100%;
 }
 
 header nav {
-    display: flex;
-    width: 100%;
+  display: flex;
+  width: 100%;
 }
 
-
 .panel {
-    display: flex;
-    border: thin solid var(--subtle);
-    overflow: hidden;
-    margin-bottom: 0.25rem;
-    border-radius: 0.25rem;
-    background: var(--bg);
-    transition: all 0.2s ease-in-out;
-    cursor: grab;
+  display: flex;
+  border: thin solid var(--subtle);
+  overflow: hidden;
+  margin-bottom: 0.25rem;
+  border-radius: 0.25rem;
+  background: var(--bg);
+  transition: all 0.2s ease-in-out;
+  cursor: grab;
 }
 
 .panel:hover {
-  scale: 1.05
+  scale: 1.05;
 }
 
 .panel * {
-    flex: 0 1 auto;
-    //temp
-    height: 36px;
+  flex: 0 1 auto;
+  height: 36px;
 }
 
 .panel .module {
@@ -100,68 +100,95 @@ header nav {
 }
 
 .panel .type {
-    padding: 0.5rem;
-    border: none;
-    display: block;
-    color: var(--panelfg);
-    text-align: right;
-    background: var(--panelbg);
-    width: 6rem;
-    flex: 0 0 auto;
-      //new
-    max-width: 8rem;
-    max-height: 2.5rem;
+  padding: 0.5rem;
+  border: none;
+  display: block;
+  color: var(--panelfg);
+  text-align: right;
+  background: var(--panelbg);
+  width: 6rem;
+  flex: 0 0 auto;
+  max-width: 8rem;
+  max-height: 2.5rem;
 }
 
 .panel a {
-    width: 100%;
-    padding: 0.5rem 1rem;
-    display:inline-block;
-    text-decoration: none;
-    transition: background 0.25s ease-in-out;
-    background: var(--panelbg);
+  width: 100%;
+  padding: 0.5rem 1rem;
+  display: inline-block;
+  text-decoration: none;
+  transition: background 0.25s ease-in-out;
+  background: var(--panelbg);
 }
 
 .panel a:hover {
-    background: var(--hoverhighlight);
-    outline: none;
+  background: var(--hoverhighlight);
+  outline: none;
 }
 
 .panel a:focus {
-    background: var(--focushighlight);
-    outline: none;
+  background: var(--focushighlight);
+  outline: none;
 }
 
 .panel a,
 .panel a:visited {
-    color: var(--panelfgvisited);
+  color: var(--panelfgvisited);
 }
 
-
-.panel[data-matched="false"],
-.editorPanel[data-matched="false"],
-.topic[data-matched="false"] {
-    display: none;
+.panel[data-matched='false'],
+.editorPanel[data-matched='false'],
+.topic[data-matched='false'] {
+  display: none;
 }
 
-
-.panel .worksheet   { background: var(--c1); color: var(--c1bg);}
-.panel .coursework  { background: var(--c1); color: var(--c1bg);}
-.panel .slides      { background: var(--c2); color: var(--c2bg);}
-.panel .resource    { background: var(--c3); color: var(--c3bg);}
-.panel .book        { background: var(--c3); color: var(--c3bg);}
-.panel .example     { background: var(--c4); color: var(--c4bg);}
-.panel .source      { background: var(--c5); color: var(--c5bg);}
-.panel .github      { background: var(--c5); color: var(--c5bg);}
-.panel .information { background: var(--c6); color: var(--c6bg);}
-.panel .video       { background: var(--cvid); color: var(--cvidbg);}
+.panel .worksheet {
+  background: var(--c1);
+  color: var(--c1bg);
+}
+.panel .coursework {
+  background: var(--c1);
+  color: var(--c1bg);
+}
+.panel .slides {
+  background: var(--c2);
+  color: var(--c2bg);
+}
+.panel .resource {
+  background: var(--c3);
+  color: var(--c3bg);
+}
+.panel .book {
+  background: var(--c3);
+  color: var(--c3bg);
+}
+.panel .example {
+  background: var(--c4);
+  color: var(--c4bg);
+}
+.panel .source {
+  background: var(--c5);
+  color: var(--c5bg);
+}
+.panel .github {
+  background: var(--c5);
+  color: var(--c5bg);
+}
+.panel .information {
+  background: var(--c6);
+  color: var(--c6bg);
+}
+.panel .video {
+  background: var(--cvid);
+  color: var(--cvidbg);
+}
 
 .topic {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
   max-width: var(--wide);
-  padding: 1rem 0 .5rem;
+  padding: 1rem 0 0.5rem;
   font-weight: normal;
 }
 
@@ -181,7 +208,7 @@ header nav {
 }
 
 .editorPanel {
-  position:relative;
+  position: relative;
   display: grid;
   grid-template-columns: 0fr 2fr 2fr;
   grid-auto-rows: auto;
@@ -191,56 +218,56 @@ header nav {
   margin-top: 5px;
   margin-bottom: 5px;
   border: 3px solid black;
-  padding:5px;
+  padding: 5px;
 }
 
 .inputs {
-  grid-column:2;
-  padding:5px;
-  width:100%;
+  grid-column: 2;
+  padding: 5px;
+  width: 100%;
   max-height: 100%;
 }
 
 .names {
-  grid-column:1;
-  color:black;
+  grid-column: 1;
+  color: black;
 }
 
 .text {
-  color:black;
+  color: black;
 }
 
 .secondary-options {
-  position:absolute;
-  padding:5px;
+  position: absolute;
+  padding: 5px;
   right: 5%;
-  display:flex;
-  flex-direction:column;
+  display: flex;
+  flex-direction: column;
 }
 
 .secondary-item {
-  display:flex;
-  flex-direction:row;
-  justify-content:space-between;
-  align-items:center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .keywords-list {
-  grid-column-start:1;
-  grid-column-end:4;
+  grid-column-start: 1;
+  grid-column-end: 4;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  padding:5px;
+  padding: 5px;
 }
 
 .keyword {
   border: 1px solid black;
   border-radius: 5px;
-  background-color: #ADD8E6;
-  color:black;
+  background-color: #add8e6;
+  color: black;
   padding: 5px;
-  margin-right:5%;
+  margin-right: 5%;
 }
 
 .keyword:hover {
@@ -252,7 +279,7 @@ header nav {
   border-radius: 2px;
   background-color: grey;
   order: 1;
-  max-width:100%;
-  max-height:100%;
+  max-width: 100%;
+  max-height: 100%;
   font-size: 16px;
 }

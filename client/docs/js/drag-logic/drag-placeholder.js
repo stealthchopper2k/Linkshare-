@@ -1,6 +1,5 @@
 import { removePlaceHolder } from './draggable.js';
 import { insertToClosestElement } from './insertion.js';
-import { uiDynamicFile } from '../dashboard/hotlist.js';
 
 export function dragOverAddPlaceHolder(droppableEle) {
   droppableEle.addEventListener('dragover', placeHolderFunction);
@@ -9,7 +8,9 @@ export function dragOverAddPlaceHolder(droppableEle) {
 // placeholder is the element that shows where the dragged element will be placed
 export function placeHolderFunction(e) {
   // if above placeholder, then dont do anything
-  if (e.target.classList.contains('placeholder')) { return; }
+  if (e.target.classList.contains('placeholder')) {
+    return;
+  }
   removePlaceHolder();
 
   const div = document.createElement('div');
@@ -29,6 +30,8 @@ export function placeHolderFunction(e) {
 export function documentRemoval(element) {
   document.addEventListener('dragend', (e) => {
     const placeholder = document.querySelector(`.${element}`);
-    if (placeholder) { placeholder.remove(); }
+    if (placeholder) {
+      placeholder.remove();
+    }
   });
 }

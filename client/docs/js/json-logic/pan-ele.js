@@ -1,5 +1,5 @@
 import { populateKeywordsDiv, addKeyword } from './editor.js';
-import { changeNgrams } from '../../script.js';
+import { changeNgrams } from '../../index.js';
 import { generateNGramIndex } from '../ordering.js';
 import { applyCSS } from './helper.js';
 
@@ -100,9 +100,11 @@ export class Panel extends HTMLElement {
     editorPanel.querySelector('.type').value = this.link.type;
     editorPanel.querySelector('.color-type').value = this.link.typeColor;
     editorPanel.querySelector('.color-refName').value = this.link.textColor;
-    editorPanel.querySelector('.type').style.backgroundColor = this.link.typeColor;
+    editorPanel.querySelector('.type').style.backgroundColor =
+      this.link.typeColor;
     editorPanel.querySelector('.refInput').value = this.link.text;
-    editorPanel.querySelector('.theurlthingthatactuallymatters').value = this.link.href;
+    editorPanel.querySelector('.theurlthingthatactuallymatters').value =
+      this.link.href;
     editorPanel.querySelector('.pub-checkbox').checked = this.link.pub;
 
     const keywordList = editorPanel.querySelector('.keywords-list');
@@ -116,7 +118,7 @@ export class Panel extends HTMLElement {
 
   // understood from https://stackoverflow.com/questions/20069828/how-to-convert-set-to-array
   getUniqueLinkTypes(links) {
-    return Array.from(new Set(links.map(link => link.type)));
+    return Array.from(new Set(links.map((link) => link.type)));
   }
 
   // concept learned from https://coderwall.com/p/o9ws2g/why-you-should-always-append-dom-elements-using-documentfragments
@@ -149,7 +151,9 @@ export class Panel extends HTMLElement {
 
     const typeInput = editorPanel.querySelector('.type');
     const textInput = editorPanel.querySelector('.refInput');
-    const hrefInput = editorPanel.querySelector('.theurlthingthatactuallymatters');
+    const hrefInput = editorPanel.querySelector(
+      '.theurlthingthatactuallymatters'
+    );
     const pubInput = editorPanel.querySelector('.pub-checkbox');
     const confirmBtn = editorPanel.querySelector('.confirm');
     const cancelBtn = editorPanel.querySelector('.cancel');

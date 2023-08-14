@@ -1,0 +1,8 @@
+/* style/combined.css */
+
+@import 'style.css';
+@import 'options.css';
+@import 'form.css';
+@import 'login.css';
+@import 'rights.css';
+@import 'color.css';

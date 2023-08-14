@@ -47,7 +47,8 @@ export function uiAddLinks(links) {
   let lastTopic;
   for (let j = 0; j < links.length; j++) {
     const link = links[j];
-    if (link.topic && link.topic !== lastTopic && link.topic !== 'shadow') { // if not shadow, which is default topic
+    if (link.topic && link.topic !== lastTopic && link.topic !== 'shadow') {
+      // if not shadow, which is default topic
       const topicElement = uiCreateTopic(link.topic, i--);
       main.append(topicElement);
       // headers are content editable

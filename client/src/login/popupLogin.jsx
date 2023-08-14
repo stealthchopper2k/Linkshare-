@@ -30,7 +30,7 @@ export function PopupLogin() {
           whiteSpace: 'nowrap',
         }}
       >
-          To make pages Sign-In/Register!
+        To make pages Sign-In/Register!
       </h1>
       <div
         style={{

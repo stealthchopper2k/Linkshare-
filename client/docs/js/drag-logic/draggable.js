@@ -1,4 +1,10 @@
-import { getPrecedingH2Name, uiPosition, swapIndexPositions, removeSubsequentElements, getMainUi } from '../json-logic/helper.js';
+import {
+  getPrecedingH2Name,
+  uiPosition,
+  swapIndexPositions,
+  removeSubsequentElements,
+  getMainUi,
+} from '../json-logic/helper.js';
 import { closestPanelOrTopic } from './insertion.js';
 
 // insertToClosestElement,
@@ -61,7 +67,8 @@ export function droppable(droppableEle) {
     if (isRemoveBin) {
       // delete options if dropped on remove div
       deleteDrop(item);
-    } else if (isMain) { // if in main then replace with dynamic placeholder
+    } else if (isMain) {
+      // if in main then replace with dynamic placeholder
       const placeholder = document.querySelector('.placeholder');
       if (placeholder) {
         placeholder.replaceWith(item);

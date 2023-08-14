@@ -15,7 +15,12 @@ import { resetPassword } from './handlers';
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
         Linkshare
@@ -38,16 +43,21 @@ export default function ResetPassword() {
           alignItems: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-        </Avatar>
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}></Avatar>
         <Typography component="h1" variant="h5">
-            Reset Password
+          Reset Password
         </Typography>
-        <Box component="form" noValidate onSubmit={(e) => {
-          const data = new FormData(e.currentTarget);
-          const email = data.get('email');
-          resetPassword(email);
-        }} sx={{ mt: 3 }}>
+        <Box
+          component="form"
+          noValidate
+          onSubmit={(e) => {
+            e.preventDefault();
+            const data = new FormData(e.currentTarget);
+            const email = data.get('email');
+            resetPassword(email);
+          }}
+          sx={{ mt: 3 }}
+        >
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -67,12 +77,12 @@ export default function ResetPassword() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-              Send Reset Email
+            Send Reset Email
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link href="/login" variant="body2">
-                  Remember Password?
+                Remember Password?
               </Link>
             </Grid>
           </Grid>

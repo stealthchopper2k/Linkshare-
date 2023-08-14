@@ -14,14 +14,31 @@ import {
   uiSyncComponent,
   addComponent,
   uiDeleteComponent,
-  fileToDashboard,
   uiUpdateComponent,
   editRightsComponent,
 } from './components.js';
 import { uiDynamicPanel, uiCreateTopic } from '../ui.js';
-import { uiDynamicFile } from '../dashboard/hotlist.js';
-import { fileUpdateComponent } from '../dashboard/components.js';
 import { syncUiToArray } from '../drag-logic/draggable.js';
+import UpdateImg from '../../images/push.png?as=webp';
+import DeleteImg from '../../images/trash.png?as=webp';
+import ReloadImg from '../../images/sync.png?as=webp';
+import ShareImg from '../../images/share.svg?as=webp';
+
+function addUtilityImages() {
+  // add the images to the utility bar
+
+  const updateImg = document.querySelector('.update');
+  const deleteImg = document.querySelector('.remove');
+  const syncImg = document.querySelector('.sync');
+  const shareImg = document.querySelector('.share');
+
+  console.log(updateImg);
+
+  updateImg.src = UpdateImg;
+  deleteImg.src = DeleteImg;
+  syncImg.src = ReloadImg;
+  shareImg.src = ShareImg;
+}
 
 // holding div template
 export function setUtilityTemplate() {
@@ -87,7 +104,6 @@ export function uiUtilityBar(data, page) {
 
   if (page === 'filePage') {
     const files = data.files;
-    fileUpdateComponent(specificContent, files);
     addComponent(files, specificContent, 'filepage');
   } else if (page === 'linkpage') {
     const links = data.file.links;
@@ -95,12 +111,13 @@ export function uiUtilityBar(data, page) {
     handleTopicAndPanelDelete(links);
 
     if (auth.currentUser) {
-      if (!data.hasInDash) fileToDashboard(specificContent); // if user already has in dash theres no need to add it again
       rightsToComponents(rights, specificContent, data, links);
     } else {
       // todo add to local storage
     }
   }
+
+  addUtilityImages();
 }
 
 // messy?

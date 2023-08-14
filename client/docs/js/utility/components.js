@@ -1,8 +1,4 @@
-import {
-  addToDashboard,
-  updateContent,
-  updateFileRights,
-} from '../auth/fileReqs.js';
+import { updateContent, updateFileRights } from '../auth/fileReqs.js';
 import { droppable } from '../drag-logic/draggable.js';
 import { setLinkPageAdders, setFilePageAdders } from './utilityBar.js';
 import { auth } from '../auth/google.js';
@@ -116,8 +112,9 @@ export function editRightsComponent(specificContent, file) {
       const userEmail = e.target.value;
 
       // if exists
-      if (usersWithRights.some((user) => Object.keys(user)[0] === userEmail))
+      if (usersWithRights.some((user) => Object.keys(user)[0] === userEmail)) {
         return;
+      }
 
       const user = {
         [userEmail]: rightType,
@@ -169,13 +166,5 @@ export function uiSyncComponent(specificContent) {
   document.querySelector('.utilityBar').append(syncDiv);
   syncDiv.addEventListener('click', () => {
     window.location.reload();
-  });
-}
-
-export function homeComponent(specificContent) {
-  const homeDiv = specificContent.querySelector('#home');
-  document.querySelector('.utilityBar').append(homeDiv);
-  homeDiv.addEventListener('click', () => {
-    window.location.href = '/dashboard.html';
   });
 }

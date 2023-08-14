@@ -31,10 +31,9 @@ function Copyright(props) {
 }
 export default function SignIn() {
   return (
-    <Container component="main" maxWidth="xs" >
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
-
         sx={{
           marginTop: 8,
           display: 'flex',
@@ -42,15 +41,14 @@ export default function SignIn() {
           alignItems: 'center',
         }}
       >
-        <Avatar >
-
-        </Avatar>
+        <Avatar></Avatar>
         <Typography component="h1" variant="h5">
-            Sign in
+          Sign in
         </Typography>
         <Box
           component="form"
           onSubmit={(e) => {
+            e.preventDefault();
             const data = new FormData(e.currentTarget);
             const password = data.get('password');
             const email = data.get('email');
@@ -89,22 +87,24 @@ export default function SignIn() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-              Sign In
+            Sign In
           </Button>
-          <Button onClick={() => {
-            googleSignIn();
-          }} style={{ backgroundColor: 'green' }}
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
+          <Button
+            onClick={() => {
+              googleSignIn();
+            }}
+            style={{ backgroundColor: 'green' }}
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
           >
-              Google Sign In
+            Google Sign In
           </Button>
           <Grid container>
             <Grid item xs>
               <Link href="/forgotpassword" variant="body2">
-                  Forgot password?
+                Forgot password?
               </Link>
             </Grid>
             <Grid item>

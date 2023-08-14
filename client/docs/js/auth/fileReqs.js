@@ -1,13 +1,16 @@
 export async function addToDashboard(idToken, objectId, title) {
   try {
-    const response = await fetch(`https://europe-west2-linkshares.cloudfunctions.net/useraddedfiletodashboard?objectId=${objectId}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${idToken}`,
-        body: JSON.stringify({ title: title }),
-      },
-    });
+    const response = await fetch(
+      `https://europe-west2-linkshares.cloudfunctions.net/useraddedfiletodashboard?objectId=${objectId}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${idToken}`,
+          body: JSON.stringify({ title: title }),
+        },
+      }
+    );
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -21,13 +24,16 @@ export async function addToDashboard(idToken, objectId, title) {
 
 export async function getStoredFiles(idToken) {
   try {
-    const response = await fetch('https://europe-west2-linkshares.cloudfunctions.net/getuserfiles', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
+    const response = await fetch(
+      'https://europe-west2-linkshares.cloudfunctions.net/getuserfiles',
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${idToken}`,
+        },
+      }
+    );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -38,16 +44,18 @@ export async function getStoredFiles(idToken) {
   }
 }
 
-
 // request bucket with no rights
 export async function signedOutRequest(objectId) {
   try {
-    const response = await fetch(`https://europe-west2-linkshares.cloudfunctions.net/getfilesuser?objectId=${objectId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await fetch(
+      `https://europe-west2-linkshares.cloudfunctions.net/getfilesuser?objectId=${objectId}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -61,13 +69,16 @@ export async function signedOutRequest(objectId) {
 // request bucket and check rights
 export async function signedInRequest(idToken, objectId) {
   try {
-    const response = await fetch(`https://europe-west2-linkshares.cloudfunctions.net/signedinuser?objectId=${objectId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
+    const response = await fetch(
+      `https://europe-west2-linkshares.cloudfunctions.net/signedinuser?objectId=${objectId}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${idToken}`,
+        },
+      }
+    );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -80,7 +91,9 @@ export async function signedInRequest(idToken, objectId) {
 
 export async function updateContent(idToken, objectId, links) {
   const header = document.querySelector('#title').textContent;
-  const publicationTime = new Date().toLocaleString('en-GB', { timeZone: 'UTC' });
+  const publicationTime = new Date().toLocaleString('en-GB', {
+    timeZone: 'UTC',
+  });
 
   const file = {
     title: header,
@@ -89,14 +102,17 @@ export async function updateContent(idToken, objectId, links) {
   };
 
   try {
-    const response = await fetch(`https://europe-west2-linkshares.cloudfunctions.net/editbucketfile?objectId=${objectId}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${idToken}`,
-      },
-      body: JSON.stringify(file),
-    });
+    const response = await fetch(
+      `https://europe-west2-linkshares.cloudfunctions.net/editbucketfile?objectId=${objectId}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify(file),
+      }
+    );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -110,14 +126,17 @@ export async function updateContent(idToken, objectId, links) {
 
 export async function updateFiles(idToken, files) {
   try {
-    const response = await fetch('https://europe-west2-linkshares.cloudfunctions.net/updateuserfiles', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${idToken}`,
-      },
-      body: JSON.stringify(files),
-    });
+    const response = await fetch(
+      'https://europe-west2-linkshares.cloudfunctions.net/updateuserfiles',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify(files),
+      }
+    );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -131,14 +150,17 @@ export async function updateFiles(idToken, files) {
 
 export async function updateFileRights(idToken, objectId, usersWithRights) {
   try {
-    const response = await fetch(`https://europe-west2-linkshares.cloudfunctions.net/updatefilerights?objectId=${objectId}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${idToken}`,
-      },
-      body: JSON.stringify(usersWithRights),
-    });
+    const response = await fetch(
+      `https://europe-west2-linkshares.cloudfunctions.net/updatefilerights?objectId=${objectId}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify(usersWithRights),
+      }
+    );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -153,13 +175,16 @@ export async function updateFileRights(idToken, objectId, usersWithRights) {
 // getfilerights
 export async function getFileRights(idToken, objectId) {
   try {
-    const response = await fetch(`http://127.0.0.1:8000/linkshares/europe-west2/addtobucketfile?objectId=${objectId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
+    const response = await fetch(
+      `http://127.0.0.1:8000/linkshares/europe-west2/addtobucketfile?objectId=${objectId}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${idToken}`,
+        },
+      }
+    );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -172,13 +197,16 @@ export async function getFileRights(idToken, objectId) {
 
 export async function initiateNewLinkPage(idToken, index) {
   try {
-    const response = await fetch(`https://europe-west2-linkshares.cloudfunctions.net/createfile?index=${index}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${idToken}`,
-      },
-    });
+    const response = await fetch(
+      `https://europe-west2-linkshares.cloudfunctions.net/createfile?index=${index}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${idToken}`,
+        },
+      }
+    );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

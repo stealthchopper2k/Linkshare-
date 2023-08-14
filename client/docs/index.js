@@ -6,13 +6,11 @@ import { initAuthUi } from './js/auth/authUi.js';
 import {
   signedInRequest,
   signedOutRequest,
-  getStoredFiles,
   initiateNewLinkPage,
 } from './js/auth/fileReqs.js';
-import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js';
+import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './js/auth/google.js';
-
-import { makeFilePage } from './js/dashboard/hotlist.js';
+import './style/master.css';
 
 export let ngrams;
 // https://stackoverflow.com/questions/53723251/javascript-modifing-an-imported-variable-causes-assignment-to-constant-varia
@@ -140,15 +138,13 @@ async function handleNewPage(token) {
 onAuthStateChanged(auth, async (user) => {
   const objectId = window.location.hash.substring(1);
 
-  const page = window.location.pathname;
-
   if (objectId.includes('newFile')) {
     if (user) {
       const token = await user.getIdToken();
       handleNewPage(token);
       return;
     } else {
-      window.location.redirect = '/login.html';
+      window.location.redirect = '/login';
     }
   }
 
@@ -186,9 +182,10 @@ export async function onHashChanged() {
   }
 }
 
-window.addEventListener('load', setupEventListeners);
 window.addEventListener('hashchange', (e) => {
   // if we just came from a newFile page, we dont need to refetch any data
   if (e.oldURL.includes('newFile')) return;
   onHashChanged(e);
 });
+
+document.addEventListener('DOMContentLoaded', setupEventListeners);

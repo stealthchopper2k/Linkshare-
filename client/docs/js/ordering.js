@@ -1,4 +1,4 @@
-import { ngrams, GRAMSIZE } from '../script.js';
+import { ngrams, GRAMSIZE } from '../index.js';
 
 // create an array of ngrams within string
 // e.g. otter -> ot/tt/te/er and banana -> ba/an/na
@@ -33,7 +33,9 @@ export function generateNGramIndex(links, n = 2) {
 export function score(text) {
   const resettable = document.querySelectorAll('main [data-score]');
   // const resettable = document.querySelectorAll('main>*');
-  resettable.forEach(r => { r.dataset.score = 0; });
+  resettable.forEach((r) => {
+    r.dataset.score = 0;
+  });
 
   // get ngrams for input
   const grams = explode(text, GRAMSIZE);
@@ -66,15 +68,21 @@ export function score(text) {
   // new links not searchable
   if (text.length < GRAMSIZE) {
     const hideable = document.querySelectorAll('main [data-score]');
-    hideable.forEach(r => { r.dataset.matched = true; });
+    hideable.forEach((r) => {
+      r.dataset.matched = true;
+    });
     sortBy('order');
   } else {
     // hide non-matches if there was some input
     const hide = document.querySelectorAll('main [data-score="0"]');
     const show = document.querySelectorAll('main :not([data-score="0"])');
     console.log(show);
-    hide.forEach(r => { r.dataset.matched = false; });
-    show.forEach(r => { r.dataset.matched = true; });
+    hide.forEach((r) => {
+      r.dataset.matched = false;
+    });
+    show.forEach((r) => {
+      r.dataset.matched = true;
+    });
     // sort by highest score (hide zeroes)
     sortBy('score');
   }
@@ -88,5 +96,5 @@ export function sortBy(what = 'score') {
 
   // sort from highest value to smallest
   nodes.sort((x, y) => y.dataset[what] - x.dataset[what]);
-  nodes.forEach(n => main.appendChild(n));
+  nodes.forEach((n) => main.appendChild(n));
 }

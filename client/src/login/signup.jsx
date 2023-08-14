@@ -15,10 +15,15 @@ import { signUpForm } from './handlers';
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-      Linkshare
+        Linkshare
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -38,17 +43,22 @@ export default function SignUp() {
           alignItems: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-        </Avatar>
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}></Avatar>
         <Typography component="h1" variant="h5">
-            Sign up
+          Sign up
         </Typography>
-        <Box component="form" noValidate onSubmit={(e) => {
-          const data = new FormData(e.currentTarget);
-          const password = data.get('password');
-          const email = data.get('email');
-          signUpForm(email, password);
-        }} sx={{ mt: 3 }}>
+        <Box
+          component="form"
+          noValidate
+          onSubmit={(e) => {
+            e.preventDefault();
+            const data = new FormData(e.currentTarget);
+            const password = data.get('password');
+            const email = data.get('email');
+            signUpForm(email, password);
+          }}
+          sx={{ mt: 3 }}
+        >
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -105,12 +115,12 @@ export default function SignUp() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-              Sign Up
+            Sign Up
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link href="/login" variant="body2">
-                  Already have an account? Sign in
+                Already have an account? Sign in
               </Link>
             </Grid>
           </Grid>

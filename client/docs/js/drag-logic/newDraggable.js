@@ -1,9 +1,14 @@
-import { getPrecedingH2Name, uiPosition, editElement, getMainUi, getOrder } from '../json-logic/helper.js';
-import { changeNgrams } from '../../script.js';
+import {
+  getPrecedingH2Name,
+  uiPosition,
+  editElement,
+  getMainUi,
+  getOrder,
+} from '../json-logic/helper.js';
+import { changeNgrams } from '../../index.js';
 import { generateNGramIndex } from '../ordering.js';
 import { uiDynamicPanel, uiCreateTopic, addDragBehaviour } from '../ui.js';
 import { syncUiToArray, dragStart } from './draggable.js';
-import { uiDynamicFile } from '../dashboard/hotlist.js';
 
 export function newDroppable(draggedElement, array, item) {
   const eleType = draggedElement.tagName;

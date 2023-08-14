@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en"><head><script defer src="/module/vanilla/index.js"></script></head>
+  <meta charset="UTF-8" />
+  <meta
+    name="description"
+    content="Quick links to learning materials from UoP SoftEng."
+  />
+  <meta name="theme-color" content="#00a0ff" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Web Links</title>
+
+  <!-- <script type="module" src="./module/vanilla/index.js" defer async></script> -->
+  <!-- <link rel="shortcut icon" type="image/png" href="img/192.png" /> -->
+  <link rel="manifest" href="manifest.json" />
+  <!-- <link rel="apple-touch-icon" href="/img/rgb/192.png" /> -->
+  <header>
+    <div class="login">
+      <div class="icon-wrapper">
+        <img class="icon" />
+        <div class="dropdown">
+          <div class="google">
+            <button class="signin">Google Sign In</button>
+            <button class="signout">Sign Out</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <select id="datasel" disabled class="hidden">
+      <option>loading…</option>
+    </select>
+
+    <h1 id="title">WebLinks</h1>
+    <label for="filter"
+      >This is a search field. Text entered here is used to filter the rest of
+      the page, leaving only relevant links.</label
+    >
+    <input type="text" id="filter" placeholder="Search" autofocus />
+  </header>
+  <body>
+    <!-- <div id="root"></div>
+    <script type="text/javascript" src="main.js"></script> -->
+
+    <template id="selectorTemplate">
+      <select class="framework">
+        <option value="text">Link Name</option>
+        <option value="href">URL</option>
+        <option value="keywords">Keywords</option>
+        <option value="pub">Publish Status</option>
+      </select>
+    </template>
+
+    <template id="underPanel">
+      <div class="customisePanel">
+        <div class="customiseSection">
+          <span>Type</span>
+          <input
+            value="type"
+            type="text"
+            id="filter"
+            placeholder="Search"
+            autofocus
+          />
+        </div>
+        <div class="customiseSection">
+          <span>Link Name</span>
+          <input
+            value="text"
+            type="text"
+            id="filter"
+            placeholder="Search"
+            autofocus
+          />
+        </div>
+        <div class="customiseSection">
+          <span>URL</span>
+          <input
+            value="href"
+            value="text"
+            type="text"
+            id="filter"
+            placeholder="Search"
+            autofocus
+          />
+        </div>
+        <div class="customiseSection">
+          <span>Keywords</span>
+          <input type="keywords" id="filter" placeholder="Search" autofocus />
+        </div>
+        <div class="customiseSection">
+          <span>Pub</span>
+          <input value="pub" type="checkbox" checked="false" />
+          <input value="pub" type="checkbox" checked="false" />
+          <span>Customise Panel</span>
+        </div>
+      </div>
+    </template>
+
+    <template id="utilityBarTemplate">
+      <div class="utilityBar"></div>
+    </template>
+
+    <template id="specificControllers">
+      <div class="iconContainer" id="remove">
+        <img class="remove" />
+        <span class="info">Remove</span>
+        <div class="op delOptions hidden">
+          <button class="delTopic">Delete Topic</button>
+          <button class="delPanel">Delete Topic + Panels</button>
+        </div>
+      </div>
+      <div class="iconContainer" id="add">
+        <div class="addOptions">
+          <div class="addTopic"></div>
+          <div class="addPanel"></div>
+        </div>
+      </div>
+      <div class="iconContainer" id="addToDashboard">
+        <img class="option addToDashboard" />
+        <span class="info">Dashboard</span>
+      </div>
+      <div class="iconContainer" id="read">
+        <img class="sync" />
+        <span class="info">Sync</span>
+      </div>
+      <div class="iconContainer" id="update">
+        <img class="update" />
+        <span class="info">Update</span>
+      </div>
+      <div class="iconContainer" id="editrights">
+        <div class="shareimg">
+          <img class="share" />
+          <span>Share</span>
+        </div>
+        <div class="section-edit">
+          <h3 class="rightsHeader">Grant Rights</h3>
+          <div class="rightsBox">
+            <input class="emailInput" placeholder="email" />
+            <select class="rightType">
+              <option value="edit">Edit</option>
+              <option value="owner">Owner</option>
+              <option value="viewer">Viewer</option>
+            </select>
+          </div>
+          <h4 class="rightsHeader">Users with Rights</h4>
+          <div class="userList"></div>
+          <h5 class="rightsHeader">Document Visibility</h5>
+          <div class="readType">
+            <span>Publicly Readable</span>
+            <input type="checkbox" id="readType" name="scales" checked />
+          </div>
+          <button class="confirmBtn">Confirm Changes</button>
+        </div>
+      </div>
+    </template>
+
+    <template id="editor-panel-template">
+      <div class="editorPanel">
+        <span class="names type-name">Type: </span>
+        <input class="inputs type" list="typesuggestions" />
+        <span class="names refName">Name: </span>
+        <input class="inputs refInput" />
+        <span class="names url">URL: </span>
+        <input class="inputs theurlthingthatactuallymatters" />
+        <span class="names keywords">Keywords: </span>
+        <input class="inputs keywords-input" />
+        <div class="keywords-list"></div>
+        <div class="secondary-options">
+          <div class="secondary-item">
+            <span class="text">Type Color : </span>
+            <input type="color" class="color-type" tabindex="-1" />
+          </div>
+          <div class="secondary-item">
+            <span class="text">Text Color :</span>
+            <input type="color" class="color-refName" tabindex="-1" />
+          </div>
+          <div class="secondary-item">
+            <span class="names pub">Public: </span>
+            <!-- tabIndex the inputs field that require a mouse click-->
+            <input class="inputs pub-checkbox" type="checkbox" tabindex="-1" />
+          </div>
+          <div class="secondary-item">
+            <button class="confirm" value="confirm">Confirm</button>
+          </div>
+          <div class="secondary-item">
+            <button class="cancel" value="cancel">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <datalist id="suggestions">
+      <option value="Option 1"></option>
+      <option value="Option 2"></option>
+      <option value="Option 3"></option>
+    </datalist>
+
+    <datalist id="typesuggestions"></datalist>
+  </body>
+</html>

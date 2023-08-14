@@ -3,17 +3,25 @@ const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 const path = require('path');
 
 module.exports = {
+  experiments: {
+    outputModule: true,
+  },
   context: __dirname,
-  entry: './src/index.js',
+  entry: {
+    'module/vanilla/index': './docs/index.js',
+    'module/react/index': './src/index.js',
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'main.js',
+    filename: '[name].js',
+    scriptType: 'text/javascript',
     publicPath: '/',
+    assetModuleFilename: 'assets/[name][ext]',
   },
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx|mjs)$/,
         resolve: {
           fullySpecified: false,
         },
@@ -25,9 +33,16 @@ module.exports = {
           },
         },
       },
+      // Rule for processing images in docs/images
       {
-        test: /\.png/,
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
+        include: path.resolve(__dirname, './src/images'),
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+        include: path.resolve(__dirname, './docs/images'),
       },
       {
         test: /\.css$/i,
@@ -70,6 +85,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
       filename: 'index.html',
+      chunks: ['module/react/index'],
+    }),
+    new HtmlWebpackPlugin({
+      template: './public/filepage.html',
+      filename: 'filepage.html',
+      chunks: ['module/vanilla/index'],
     }),
   ],
 };
