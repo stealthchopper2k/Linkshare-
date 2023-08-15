@@ -23,35 +23,36 @@ const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
 export const auth = getAuth();
 
+// try {
+//   const idToken = await auth.currentUser.getIdToken();
+//   const res = await fetch(
+//     'https://europe-west2-linkshares.cloudfunctions.net/getuserfiles',
+//     {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//         Authorization: `Bearer ${idToken}`,
+//       },
+//     }
+//   );
+
+//   if (res.ok) {
+//     const data = await res.json();
+//     return { data, user };
+//   } else {
+//     return { success: false, message: 'Error', status: res.status };
+//   }
+// } catch (e) {
+//   console.log(e, 'Error with getting User File');
+// }
+
 // this is used to get the owners google api token to use for getting their email list in Share input
 export function googleSignIn() {
   return signInWithPopup(auth, provider)
     .then(async (result) => {
       provider.setCustomParameters({ prompt: 'select_account' });
       const user = result.user;
-      try {
-        const idToken = await auth.currentUser.getIdToken();
-        const res = await fetch(
-          'https://europe-west2-linkshares.cloudfunctions.net/getuserfiles',
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${idToken}`,
-            },
-          },
-        );
-
-        if (res.ok) {
-          const data = await res.json();
-          console.log(data);
-          return { data, user };
-        } else {
-          console.log('Error', res.status);
-        }
-      } catch (e) {
-        console.log(e, 'Error with getting User File');
-      }
+      return { success: true, user: user };
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -76,41 +77,43 @@ export function signOutGoogle() {
     });
 }
 export function signUpForm(email, password) {
-  createUserWithEmailAndPassword(auth, email, password)
+  return createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
-      console.log(user);
+      return user;
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
+      console.log(errorMessage);
+      return { success: false, code: errorMessage, message: errorCode };
     });
 }
 
 export function signInForm(email, password) {
-  signInWithEmailAndPassword(auth, email, password)
+  return signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
-      console.log(user);
+      return user;
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
+      return { success: false, code: errorMessage, message: errorCode };
     });
 }
 
 export function resetPassword(email) {
-  sendPasswordResetEmail(auth, email)
+  return sendPasswordResetEmail(auth, email)
     .then(() => {
-      console.log('Email Sent');
+      console.log('success');
+      return { success: true, message: 'Email sent' };
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-    // ..
+      return { success: false, code: errorMessage, message: errorCode };
     });
 }

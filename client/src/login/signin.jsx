@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { Avatar } from '@mui/material';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -22,14 +22,52 @@ function Copyright(props) {
     >
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Linkshare
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
 }
-export default function SignIn() {
+export default function SignIn({ pushRoute }) {
+  const [failed, setFailed] = useState(false);
+  const [failedMessage, setFailedMessage] = useState('');
+
+  async function handleForm(e) {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const password = data.get('password');
+    const email = data.get('email');
+    try {
+      const res = await signInForm(email, password);
+      const message = res.message;
+      if (res.success) {
+        pushRoute('login');
+      } else {
+        setFailed(true);
+        setFailedMessage(message);
+        e.target.reset();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function googleSign() {
+    try {
+      const res = await googleSignIn();
+      const message = res.message;
+      if (res.success) {
+        pushRoute('login');
+      } else {
+        setFailed(true);
+        setFailedMessage(message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -48,15 +86,20 @@ export default function SignIn() {
         <Box
           component="form"
           onSubmit={(e) => {
-            e.preventDefault();
-            const data = new FormData(e.currentTarget);
-            const password = data.get('password');
-            const email = data.get('email');
-            signInForm(email, password);
+            handleForm(e);
           }}
           noValidate
           sx={{ mt: 1 }}
         >
+          {failed ? (
+            <span className="flex justify-center items-center text-red-500">
+              {failedMessage.split('/')[1]}
+            </span>
+          ) : (
+            <span className="flex justify-center items-center text-green-500">
+              {failedMessage}
+            </span>
+          )}
           <TextField
             margin="normal"
             required
@@ -91,7 +134,7 @@ export default function SignIn() {
           </Button>
           <Button
             onClick={() => {
-              googleSignIn();
+              googleSign();
             }}
             style={{ backgroundColor: 'green' }}
             type="submit"

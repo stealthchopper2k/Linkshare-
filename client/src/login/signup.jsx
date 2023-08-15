@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useRef } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -31,7 +31,30 @@ function Copyright(props) {
   );
 }
 
-export default function SignUp() {
+export default function SignUp({ pushRoute }) {
+  const [failed, setFailed] = useState(false);
+  const [failedMessage, setFailedMessage] = useState('');
+
+  async function handleForm(e) {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const password = data.get('password');
+    const email = data.get('email');
+    try {
+      const res = await signUpForm(email, password);
+      const message = res.message;
+      if (res.success) {
+        pushRoute('signup'); // handle routing
+      } else {
+        setFailed(true);
+        setFailedMessage(message);
+        e.target.reset();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -47,15 +70,20 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
+        {failed ? (
+          <span className="flex justify-center items-center text-red-500">
+            {failedMessage.split('/')[1]}
+          </span>
+        ) : (
+          <span className="flex justify-center items-center text-green-500">
+            {failedMessage}
+          </span>
+        )}
         <Box
           component="form"
           noValidate
           onSubmit={(e) => {
-            e.preventDefault();
-            const data = new FormData(e.currentTarget);
-            const password = data.get('password');
-            const email = data.get('email');
-            signUpForm(email, password);
+            handleForm(e);
           }}
           sx={{ mt: 3 }}
         >

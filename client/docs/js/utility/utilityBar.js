@@ -32,12 +32,21 @@ function addUtilityImages() {
   const syncImg = document.querySelector('.sync');
   const shareImg = document.querySelector('.share');
 
-  console.log(updateImg);
+  if (updateImg) {
+    updateImg.src = UpdateImg;
+  }
 
-  updateImg.src = UpdateImg;
-  deleteImg.src = DeleteImg;
-  syncImg.src = ReloadImg;
-  shareImg.src = ShareImg;
+  if (deleteImg) {
+    deleteImg.src = DeleteImg;
+  }
+
+  if (syncImg) {
+    syncImg.src = ReloadImg;
+  }
+
+  if (shareImg) {
+    shareImg.src = ShareImg;
+  }
 }
 
 // holding div template
@@ -102,15 +111,12 @@ export function uiUtilityBar(data, page) {
   uiSyncComponent(specificContent);
   uiDeleteComponent(specificContent);
 
-  if (page === 'filePage') {
-    const files = data.files;
-    addComponent(files, specificContent, 'filepage');
-  } else if (page === 'linkpage') {
+  if (page === 'linkpage') {
     const links = data.file.links;
-    const rights = data.fileInfo.rights;
     handleTopicAndPanelDelete(links);
 
     if (auth.currentUser) {
+      const rights = data.fileInfo.rights;
       rightsToComponents(rights, specificContent, data, links);
     } else {
       // todo add to local storage
@@ -165,27 +171,6 @@ export function setLinkPageAdders(links) {
 
   addPanel.append(draggyPanel);
   addTopic.append(draggyHeader);
-
-  documentRemoval('placeholder');
-}
-
-export function setFilePageAdders(files) {
-  const addPanel = document.querySelector('.addPanel');
-
-  const order = getOrder();
-
-  const fileObj = {
-    name: 'newFile', // make unique
-    title: 'Name',
-  };
-
-  const newFile = uiDynamicFile(fileObj, order, files);
-
-  newFile.classList.add('new');
-  newDroppable(newFile, files, fileObj);
-  dragOverAddPlaceHolder(newFile);
-
-  addPanel.append(newFile);
 
   documentRemoval('placeholder');
 }

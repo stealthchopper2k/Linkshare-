@@ -13,11 +13,11 @@ export const initAuthUi = (user) => {
   } else {
     signInButton.classList.remove('hidden');
     signOutButton.classList.add('hidden');
-    image.src = 'https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg';
+    image.src =
+      'https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg';
   }
 
-  toggleDropDown.addEventListener('click', () => {
-  });
+  toggleDropDown.addEventListener('click', () => {});
 
   signInButton.addEventListener('click', async () => {
     try {

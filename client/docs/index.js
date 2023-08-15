@@ -139,29 +139,26 @@ onAuthStateChanged(auth, async (user) => {
   const objectId = window.location.hash.substring(1);
 
   if (objectId.includes('newFile')) {
-    if (user) {
-      const token = await user.getIdToken();
-      handleNewPage(token);
-      return;
-    } else {
-      window.location.redirect = '/login';
-    }
+    if (!user) window.location.href = '/login';
+    const token = await user.getIdToken();
+    handleNewPage(token);
+    return;
   }
 
   let cloudData;
 
-  if (objectId) {
-    if (user) {
-      const token = await user.getIdToken(); // fresh firebase token automatically refreshed
-      initAuthUi(user);
-      cloudData = await signedInRequest(token, objectId);
-      makeLinkPage(cloudData);
-    } else {
-      initAuthUi();
-      cloudData = await signedOutRequest(objectId);
-      makeLinkPage(cloudData);
-    }
+  if (objectId && user) {
+    const token = await user.getIdToken(); // fresh firebase token automatically refreshed
+    initAuthUi(user);
+    cloudData = await signedInRequest(token, objectId);
+  } else {
+    initAuthUi();
+    cloudData = await signedOutRequest(objectId);
   }
+
+  // if (!cloudData) window.location.href = '/';
+
+  makeLinkPage(cloudData);
 });
 
 export async function onHashChanged() {

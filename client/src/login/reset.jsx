@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -32,6 +32,29 @@ function Copyright(props) {
 }
 
 export default function ResetPassword() {
+  const [failed, setFailed] = useState(false);
+  const [failedMessage, setFailedMessage] = useState('');
+
+  async function handleForm(e) {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const email = data.get('email');
+    try {
+      const res = await resetPassword(email);
+      const message = res.message;
+      if (res.success) {
+        setFailed(false);
+        setFailedMessage(message);
+      } else {
+        setFailed(true);
+        setFailedMessage(message);
+      }
+      e.target.reset();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -47,14 +70,20 @@ export default function ResetPassword() {
         <Typography component="h1" variant="h5">
           Reset Password
         </Typography>
+        {failed ? (
+          <span className="flex justify-center items-center text-red-500">
+            {failedMessage.split('/')[1]}
+          </span>
+        ) : (
+          <span className="flex justify-center items-center text-green-500">
+            {failedMessage}
+          </span>
+        )}
         <Box
           component="form"
           noValidate
           onSubmit={(e) => {
-            e.preventDefault();
-            const data = new FormData(e.currentTarget);
-            const email = data.get('email');
-            resetPassword(email);
+            handleForm(e);
           }}
           sx={{ mt: 3 }}
         >
