@@ -25,7 +25,7 @@ export default function ImageList({ images, clickHandler, imageRef }) {
   return (
     <motion.ul
       ref={imageRef}
-      className="grid grid-cols-2 gap-4 flex-shrink-1 border-2 border-solid border-white p-16"
+      className="grid grid-cols-2 gap-4 border-2 border-solid border-white p-16"
       variants={container}
       initial="hidden"
       animate="visible"
@@ -33,7 +33,7 @@ export default function ImageList({ images, clickHandler, imageRef }) {
       {images.map((img, i) => (
         <motion.li
           key={i}
-          className="flex flex-col justify-center items-center rounded-lg h-56 w-56"
+          className="flex flex-col justify-center flex-shrink-1 items-center rounded-lg 2xl:h-56 2xl:w-56"
           variants={item}
           onClick={() => clickHandler(img)}
         >
@@ -42,7 +42,7 @@ export default function ImageList({ images, clickHandler, imageRef }) {
             className="rounded-lg w-full h-full max-h-full hover:scale-110 object-cover"
             alt="asdasd"
           />
-          <h3 className="text-white text-xl">{img.title}</h3>
+          <h3 className="text-white 2xl:text-xl">{img.title}</h3>
         </motion.li>
       ))}
     </motion.ul>

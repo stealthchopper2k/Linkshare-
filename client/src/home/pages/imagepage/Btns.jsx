@@ -12,7 +12,7 @@ export default function Btns() {
         stiffness: 260,
         damping: 20,
       }}
-      className="flex justify-center items-center flex-col flex-shrink-1 gap-16 mt-8 2xl:flex-row xl:flex-col md:flex-col sm:flex-col xs:flex-col"
+      className="flex justify-center items-center flex-col flex-shrink-1 gap-16 mt-8 2xl:flex-row xl:flex-col md:flex-col sm:gap-4 sm:flex-col xs:flex-col"
     >
       <Link to="/signup">
         <motion.button

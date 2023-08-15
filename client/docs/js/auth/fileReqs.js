@@ -63,6 +63,7 @@ export async function signedOutRequest(objectId) {
     return data;
   } catch (e) {
     console.log(`${e}, Error fetching file whilst signed out`);
+    return { error: 'Page not found' };
   }
 }
 
@@ -85,7 +86,7 @@ export async function signedInRequest(idToken, objectId) {
     const data = await response.json();
     return data;
   } catch (e) {
-    console.log(`${e}, User not signed in.`);
+    return { error: 'Page not found' };
   }
 }
 

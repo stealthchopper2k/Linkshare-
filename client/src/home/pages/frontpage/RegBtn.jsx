@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 
 export function HomeBtns() {
   const commonButtonStyles =
@@ -21,7 +20,7 @@ export function HomeBtns() {
         stiffness: 260,
         damping: 20,
       }}
-      className="flex justify-center items-center flex-row space-x-4 flex-shrink-1 2xl:flex-row xl:flex-col md:flex-col sm:flex-col xs:flex-col"
+      className="flex justify-center items-center flex-row flex-shrink-1 2xl:flex-row xl:flex-col md:flex-col sm:flex-col xs:flex-col"
     >
       <motion.input
         ref={inputRef}

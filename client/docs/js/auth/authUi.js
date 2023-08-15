@@ -1,10 +1,14 @@
 import { googleSignIn, signOutGoogle } from './google.js';
+import HomeImg from '../../images/home.svg?as=webp';
 
 export const initAuthUi = (user) => {
   const signInButton = document.querySelector('.signin');
   const signOutButton = document.querySelector('.signout');
   const toggleDropDown = document.querySelector('.icon-wrapper');
   const image = document.querySelector('.icon');
+  const homeimg = document.querySelector('.homeimg');
+
+  homeimg.src = HomeImg;
 
   if (user) {
     signInButton.classList.add('hidden');

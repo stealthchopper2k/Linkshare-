@@ -2,9 +2,7 @@
 const { onRequest } = require('firebase-functions/v2/https');
 const { getFirestore } = require('firebase-admin/firestore');
 const functions = require('firebase-functions');
-const cors = require('cors')({
-  origin: 'http://192.168.1.218:8080',
-});
+const cors = require('cors')({ origin: true });
 
 // Caution: New HTTP and HTTP callable functions deployed with any Firebase CLI lower than version 7.7.0 are private by default and throw HTTP 403 errors when invoked. Either explicitly make these functions public or update your Firebase CLI before you deploy any new functions.
 // Setting a default region gcloud config set functions/region europe-west1
@@ -463,7 +461,7 @@ exports.createfile = onRequest(
 
         // limit filename to 8 characters
         const fileName = md5('hksd' + uniqueNumber).substring(0, 8);
-        const index = req.query.index;
+        const index = parseInt(req.query.index);
 
         // update the name, which is used as a link to the linkpage stored in user files array, points to new file in files collec
         const storedFiles = userDoc.data().storedFiles;
@@ -471,10 +469,12 @@ exports.createfile = onRequest(
         console.log(storedFiles, index);
 
         // of doesnt exist, create it
-        if (!storedFiles[index]) {
+        if (!isNaN(index) && !storedFiles[index]) {
           storedFiles.splice(index, 0, { name: fileName, title: 'Title' });
+          storedFiles[index].name = fileName;
+        } else if (isNaN(index)) {
+          storedFiles.push({ name: fileName, title: 'Title' });
         }
-        storedFiles[index].name = fileName;
 
         // overwrite the stored files to have new file name
         await userDoc.ref.update({

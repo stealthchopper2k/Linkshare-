@@ -56,7 +56,7 @@ export default function ImagePage() {
   return (
     <div className="h-screen snap-start flex-shrink-1 border-b-2 border-solid border-black flex flex-row">
       <div className="flex flex-col justify-center items-center w-2/4 text-start">
-        <h1 className="text-8xl font-bold text-white">
+        <h1 className="text-3xl font-bold text-white 2xl:text-8xl xl:text-7xl sm:text-6xl">
           Store, Share,
           <br />
           Collaborate!
@@ -64,7 +64,7 @@ export default function ImagePage() {
         <Btns />
       </div>
       <div className="flex flex-col w-2/4 h-full items-center justify-center flex-shrink-1">
-        <h1 className="justify-start align-start text-7xl font-bold text-white mb-4">
+        <h1 className="justify-start align-start font-bold text-white mb-4 text-3xl 2xl:text-8xl xl:text-7xl sm:text-6xl">
           View Features
         </h1>
         <ImageList

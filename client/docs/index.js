@@ -147,7 +147,7 @@ onAuthStateChanged(auth, async (user) => {
 
   let cloudData;
 
-  if (objectId && user) {
+  if (user) {
     const token = await user.getIdToken(); // fresh firebase token automatically refreshed
     initAuthUi(user);
     cloudData = await signedInRequest(token, objectId);
@@ -156,9 +156,7 @@ onAuthStateChanged(auth, async (user) => {
     cloudData = await signedOutRequest(objectId);
   }
 
-  // if (!cloudData) window.location.href = '/';
-
-  makeLinkPage(cloudData);
+  if (cloudData) makeLinkPage(cloudData);
 });
 
 export async function onHashChanged() {
