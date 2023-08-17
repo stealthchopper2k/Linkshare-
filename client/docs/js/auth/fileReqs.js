@@ -149,7 +149,10 @@ export async function updateFiles(idToken, files) {
   }
 }
 
-export async function updateFileRights(idToken, objectId, usersWithRights) {
+// @obj usersWithRights
+// @boolean document ReadType
+
+export async function updateFileRights(idToken, objectId, postObj) {
   try {
     const response = await fetch(
       `https://europe-west2-linkshares.cloudfunctions.net/updatefilerights?objectId=${objectId}`,
@@ -159,7 +162,7 @@ export async function updateFileRights(idToken, objectId, usersWithRights) {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${idToken}`,
         },
-        body: JSON.stringify(usersWithRights),
+        body: JSON.stringify(postObj),
       }
     );
     if (!response.ok) {

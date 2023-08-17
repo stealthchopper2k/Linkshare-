@@ -79,6 +79,7 @@ export function editRightsComponent(specificContent, file) {
   document.querySelector('.utilityBar').append(editRightsDiv);
 
   const usersWithRights = file.usersWithRights;
+  let pub;
 
   // FOR CANCEL BUTTON
   const original = JSON.parse(JSON.stringify(usersWithRights));
@@ -87,6 +88,7 @@ export function editRightsComponent(specificContent, file) {
   const sectionEdit = editRightsDiv.querySelector('.section-edit');
   const userList = editRightsDiv.querySelector('.userList');
   const readType = editRightsDiv.querySelector('#readType');
+  readType.checked = file.readType;
 
   const confirmBtn = editRightsDiv.querySelector('.confirmBtn');
   const emailInput = editRightsDiv.querySelector('.emailInput');
@@ -103,7 +105,7 @@ export function editRightsComponent(specificContent, file) {
   });
 
   readType.addEventListener('change', (e) => {
-    file.readType = e.target.checked;
+    pub = e.target.checked;
   });
 
   emailInput.addEventListener('keydown', (e) => {
@@ -134,7 +136,13 @@ export function editRightsComponent(specificContent, file) {
 
     sectionEdit.style.display =
       sectionEdit.style.display === 'none' ? 'block' : 'none';
-    await updateFileRights(user.accessToken, objectId, usersWithRights);
+
+    const postObj = {
+      usersWithRights: usersWithRights,
+      readType: pub,
+    };
+
+    await updateFileRights(user.accessToken, objectId, postObj);
   });
 }
 

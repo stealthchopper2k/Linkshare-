@@ -4,14 +4,14 @@ import { onHashChanged } from '../index.js';
 
 export function changeDataFile(url) {
   localStorage.dataFileUrl = url;
-  window.location = url;
+  window.location.href = url;
   onHashChanged();
 }
 
 export function getDataFileUrl() {
   // get it from fragment, store in local storage
   if (window.location.hash.length > 1) {
-    const retval = `filepage.html#${window.location.hash.substring(1)}`;
+    const retval = `#${window.location.hash.substring(1)}`;
     localStorage.dataFileUrl = retval;
     return retval;
   }

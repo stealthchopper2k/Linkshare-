@@ -361,7 +361,10 @@ exports.updatefilerights = onRequest(
         const decodedIdToken = await admin.auth().verifyIdToken(idToken);
         const userEmail = decodedIdToken.email;
 
-        const usersWithRights = req.body;
+        const postObj = req.body;
+
+        const newUserRights = postObj.usersWithRights;
+        const newReadType = postObj.readType;
 
         const fileName = req.query.objectId;
 
@@ -383,7 +386,8 @@ exports.updatefilerights = onRequest(
         // fix if userswithrights included owner the change owner
         if (fileData.owners.includes(userEmail) || owner) {
           await fileRef.update({
-            usersWithRights,
+            usersWithRights: newUserRights,
+            readType: newReadType,
           });
 
           return res.status(200).json({ message: 'File rights updated' });
