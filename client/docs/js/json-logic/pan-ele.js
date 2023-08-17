@@ -54,7 +54,7 @@ export class Panel extends HTMLElement {
       p2.innerHTML = this.link.info || '';
       a.append(p2);
     }
-    if (this.link.textColor) p1.style.color = this.link.textColor;
+    // if (this.link.textColor) p1.style.color = this.link.textColor; disable in favour of auto lightmode and darkmode text coloring
     if (this.link.typeColor) s.style.backgroundColor = this.link.typeColor;
 
     d.append(s, a);
@@ -99,7 +99,7 @@ export class Panel extends HTMLElement {
     editorPanel.querySelector('.type-name').textContent = 'Type: ';
     editorPanel.querySelector('.type').value = this.link.type;
     editorPanel.querySelector('.color-type').value = this.link.typeColor;
-    editorPanel.querySelector('.color-refName').value = this.link.textColor;
+    // editorPanel.querySelector('.color-refName').value = this.link.textColor;
     editorPanel.querySelector('.type').style.backgroundColor =
       this.link.typeColor;
     editorPanel.querySelector('.refInput').value = this.link.text;
@@ -158,16 +158,16 @@ export class Panel extends HTMLElement {
     const confirmBtn = editorPanel.querySelector('.confirm');
     const cancelBtn = editorPanel.querySelector('.cancel');
     const typeColor = editorPanel.querySelector('.color-type');
-    const textColor = editorPanel.querySelector('.color-refName');
+    // const textColor = editorPanel.querySelector('.color-refName');
 
     // query select all similar types AND links, change the style.backgroundColor AND link.typeColor
     typeColor.addEventListener('change', (e) => {
       this.link.typeColor = typeColor.value;
     });
 
-    textColor.addEventListener('change', (e) => {
-      this.link.textColor = textColor.value;
-    });
+    // textColor.addEventListener('change', (e) => {
+    //   this.link.textColor = textColor.value;
+    // });
 
     // default input changes to alter the original array
     typeInput.addEventListener('input', (e) => {

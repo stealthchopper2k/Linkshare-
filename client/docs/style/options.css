@@ -1,87 +1,88 @@
 :root {
-    --icon-size: 22px; /* icon size */
-    --option-spacing: 12px; /* spacing between options */
-  }
-  
-  .higher-option {
-    width: 100%; /* Make the buttons fit within the rounded border */
-    height: 100%;
-  }
+  --icon-size: 22px; /* icon size */
+  --option-spacing: 12px; /* spacing between options */
+}
 
+.higher-option {
+  width: 100%; /* Make the buttons fit within the rounded border */
+  height: 100%;
+}
 
-#remove,#read,#add,#update {
+#remove,
+#read,
+#add,
+#update {
   cursor: pointer;
-  position:relative;
-  top:0;
+  position: relative;
+  top: 0;
   left: 0;
 }
 
 .hidden {
-    visibility: hidden;
+  visibility: hidden;
 }
 
-  #uiForm {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 100px;
-  }
+#uiForm {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 100px;
+}
 
-  .utilityBar {
-    position: fixed;
-    left: 0;
-    top: 30%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 0 0 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
+.utilityBar {
+  position: fixed;
+  left: 0;
+  top: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 0 0 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
 
+.addOptions {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+}
 
-  .addOptions {
-    display:flex;
-    flex-direction: column;
-    max-width:100%;
-   }
-  
-   .addOptions > * {
-    margin: 2px;
-   }
+.addOptions > * {
+  margin: 2px;
+}
 
-   .addPanel, .addTopic {
-    display:flex;
-    justify-content:center;
-    cursor: grab;
-    transform: scale(0.7);
-  }
+.addPanel,
+.addTopic {
+  display: flex;
+  justify-content: center;
+  cursor: grab;
+  transform: scale(0.7);
+}
 
-  .iconContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 60px;
-    margin: 5px 15px;
-  }
-  
-  .iconContainer img {
-    padding: 2px;
-    width: 50%;
-    height: 50%;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .iconContainer .info {
-    font-size: 0.8em;
-    font: sans-serif;
-    margin-top: 5px;
-    text-align: center;
-  }
-  
+.iconContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  margin: 5px 15px;
+}
+
+.iconContainer img {
+  padding: 2px;
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.iconContainer .info {
+  font-size: 0.8em;
+  font: sans-serif;
+  margin-top: 5px;
+  text-align: center;
+}

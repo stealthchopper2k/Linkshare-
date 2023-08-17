@@ -38,6 +38,8 @@ export function insertTopOrBottom(item, element, e) {
 }
 
 export function closestPanelOrTopic(element) {
+  if (!element) return;
+
   if (element.closest('panel-ele')) {
     return element.closest('panel-ele');
   } else if (element.closest('.topic')) {
@@ -74,7 +76,11 @@ export function findClosestElement(e, offSet, maxAttempts, vertical) {
   let offSet2 = offSet;
   let before2;
 
-  while (!before || before.classList.contains('placeholder') || before.classList.contains('check')) {
+  while (
+    !before ||
+    before.classList.contains('placeholder') ||
+    before.classList.contains('check')
+  ) {
     if (attempts < maxAttempts) {
       offSet += 10;
       offSet2 += 10;

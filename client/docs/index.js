@@ -1,4 +1,8 @@
-import { uiAddLinks } from './js/ui.js';
+import {
+  uiAddLinks,
+  uiPopulateDataSelector,
+  observeMainChildCount,
+} from './js/ui.js';
 import { uiUtilityBar } from './js/utility/utilityBar.js';
 import { getDataFileUrl, nudgeDataFile, rememberDataFile } from './js/data.js';
 import { sortBy, score, generateNGramIndex } from './js/ordering.js';
@@ -30,14 +34,6 @@ export const GRAMSIZE = 3;
 //   }
 //   window.addEventListener('load', registerServiceWorker);
 // }
-
-function reportError(msg) {
-  const main = document.createElement('main');
-  document.body.textContent = '';
-  document.body.appendChild(main);
-  main.textContent = msg;
-  main.classList.add('error');
-}
 
 /* When enter is pressed on the filter the first element
  * in the list should be opened.  Otherwise (when enter
@@ -105,8 +101,12 @@ function makeLinkPage(cloudData) {
   try {
     const links = cloudData.file.links;
 
-    document.title = `WebLinks: ${cloudData.file.title}`;
+    document.title = `${cloudData.file.title}`;
     document.querySelector('#title').textContent = cloudData.file.title;
+
+    const url = getDataFileUrl();
+
+    rememberDataFile(cloudData.file.title, url);
 
     ngrams = generateNGramIndex(links, GRAMSIZE);
 
@@ -134,13 +134,14 @@ async function handleNewPage(token) {
 
 // happens on load
 // TODO reauthenticate user redirect
-
 onAuthStateChanged(auth, async (user) => {
   const objectId = window.location.hash.substring(1);
+  uiPopulateDataSelector();
 
   if (objectId.includes('newFile')) {
     if (!user) window.location.href = '/login';
     const token = await user.getIdToken();
+    initAuthUi(user);
     handleNewPage(token);
     return;
   }
@@ -156,22 +157,37 @@ onAuthStateChanged(auth, async (user) => {
     cloudData = await signedOutRequest(objectId);
   }
 
-  if (cloudData) makeLinkPage(cloudData);
+  console.log(cloudData);
+
+  if (cloudData.error) {
+    // TODO: Search bar or visit
+    const title = document.querySelector('#title');
+    const input = document.querySelector('#filter');
+    input.style.display = 'none';
+
+    title.textContent = `${cloudData.error} :(`;
+    // search bar OR a list of files they have on their local storage
+  } else if (!cloudData.error) {
+    makeLinkPage(cloudData);
+    observeMainChildCount();
+  }
 });
 
 export async function onHashChanged() {
   const user = await auth.currentUser;
   const objectId = window.location.hash.substring(1);
+  let cloudData;
 
   try {
     if (user) {
-      const token = user.getIdToken();
-      const cloudData = await signedInRequest(token, objectId);
-      await makeLinkPage(cloudData);
+      const token = await user.getIdToken();
+      cloudData = await signedInRequest(token, objectId);
     } else {
-      const cloudData = await signedOutRequest(objectId);
-      await makeLinkPage(cloudData);
+      cloudData = await signedOutRequest(objectId);
     }
+
+    makeLinkPage(cloudData);
+    observeMainChildCount();
   } catch (e) {
     console.log(`${e}, error with onHashChanged`);
   }
@@ -180,7 +196,7 @@ export async function onHashChanged() {
 window.addEventListener('hashchange', (e) => {
   // if we just came from a newFile page, we dont need to refetch any data
   if (e.oldURL.includes('newFile')) return;
-  onHashChanged(e);
+  onHashChanged();
 });
 
 document.addEventListener('DOMContentLoaded', setupEventListeners);

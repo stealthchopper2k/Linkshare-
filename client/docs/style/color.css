@@ -1,5 +1,7 @@
+// keep everything dark mode for now bec
 :root {
-  --bg: white;
+  --bg: #c0dbea;
+  --text: #000000;
   --fg: #333;
   --subtle: #bbb;
   --hoverhighlight: #ffff63;
@@ -8,13 +10,13 @@
   --panelbg: #fcfcfc;
   --panelfg: var(--fg);
   --panelfgvisited: var(--fg);
-  --c1: hsl(10,  100%, 30%);
+  --c1: hsl(10, 100%, 30%);
   --c1bg: white;
-  --c2: hsl(60,  100%, 40%);
+  --c2: hsl(60, 100%, 40%);
   --c2bg: black;
-  --c3: hsl(40,  100%, 60%);
+  --c3: hsl(40, 100%, 60%);
   --c3bg: black;
-  --c4: hsl(230,  100%, 30%);
+  --c4: hsl(230, 100%, 30%);
   --c4bg: white;
   --c5: hsl(130, 100%, 20%);
   --c5bg: white;
@@ -27,21 +29,22 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: rgb(38, 35, 44);
-    --fg: #CCC;
-    --subtle: rgba(255,255,255,0.25);
-    --hoverhighlight: rgba(255,255,255,0.25);
-    --focushighlight: rgba(255,255,0,0.4);
+    --text: #ffffff;
+    --fg: #ccc;
+    --subtle: rgba(255, 255, 255, 0.25);
+    --hoverhighlight: rgba(255, 255, 255, 0.25);
+    --focushighlight: rgba(255, 255, 0, 0.4);
     --uopblue: #00a0ff;
-    --panelbg: rgba(255,255,255,0.1);
+    --panelbg: rgba(255, 255, 255, 0.1);
     --panelfg: var(--fg);
     --panelfgvisited: var(--fg);
-    --c1: hsla(10,  100%, 30%, 0.5);
+    --c1: hsla(10, 100%, 30%, 0.5);
     --c1bg: var(--panelfg);
-    --c2: hsla(60,  100%, 40%, 0.5);
+    --c2: hsla(60, 100%, 40%, 0.5);
     --c2bg: var(--panelfg);
-    --c3: hsla(40,  100%, 60%, 0.5);
+    --c3: hsla(40, 100%, 60%, 0.5);
     --c3bg: var(--panelfg);
-    --c4: hsla(230,  100%, 30%, 0.5);
+    --c4: hsla(230, 100%, 30%, 0.5);
     --c4bg: var(--panelfg);
     --c5: hsla(130, 100%, 20%, 0.5);
     --c5bg: var(--panelfg);

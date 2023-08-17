@@ -17,14 +17,15 @@ body {
   display: flex;
   flex-direction: column;
   background: var(--bg);
-  color: var(--fg);
+  color: var(--text);
 }
 
 main {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  min-height: 200px;
+  min-height: 80vh;
+  max-height: 80vh;
 }
 
 label {
@@ -42,6 +43,7 @@ input {
 }
 
 #filter {
+  border-radius: 5px;
   font-size: 2rem;
 }
 
@@ -196,6 +198,12 @@ header nav {
   padding-top: 0.25em;
   font-size: 80%;
   color: var(--fg-light);
+}
+
+#datasel {
+  position: fixed;
+  right: 1em;
+  top: 1em;
 }
 
 #datasel.hidden {

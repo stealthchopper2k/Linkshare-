@@ -8,7 +8,7 @@ export function HomeBtns() {
   const inputRef = useRef(null);
 
   function fetchLinkPage(objectId) {
-    window.location.href = `http://192.168.0.102:8080/filepage.html/#${objectId}`;
+    window.location.href = `http://localhost:8080/filepage.html/#${objectId}`;
   }
 
   return (
@@ -48,7 +48,7 @@ export function HomeBtns() {
       >
         <a
           className="whitespace-nowrap"
-          href="http://192.168.0.102:8080/filepage.html/#newFile"
+          href="http://localhost:8080/filepage.html/#newFile"
           target="_blank"
           rel="noopener noreferrer"
         >

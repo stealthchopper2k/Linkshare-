@@ -3,6 +3,7 @@ import { draggable, droppable } from './drag-logic/draggable.js';
 import { editElement } from './json-logic/helper.js';
 import { Panel } from './json-logic/pan-ele.js'; //eslint-disable-line
 import { dragOverAddPlaceHolder } from './drag-logic/drag-placeholder.js';
+import PlusImg from '../images/plus.png?as=webp';
 
 export function uiCreateTopic(name, order) {
   const d = document.createElement('h2');
@@ -90,4 +91,56 @@ export function uiPopulateDataSelector() {
   }
 
   selector.addEventListener('change', uiSelectDataFile);
+}
+
+export function observeMainChildCount() {
+  const main = document.querySelector('.check');
+
+  showDroppableMain();
+  const dropzone = document.querySelector('#dropzone');
+
+  // Callback function to execute when mutations are observed
+  const callback = (mutationList, observer) => {
+    for (const mutation of mutationList) {
+      if (mutation.target.childNodes.length === 1) {
+        dropzone.style.display = 'flex'; // Hide the dropzone
+      } else {
+        dropzone.style.display = 'none'; // Show the dropzone
+      }
+    }
+  };
+
+  const observer = new MutationObserver(callback);
+  observer.observe(main, { childList: true });
+}
+
+function showDroppableMain() {
+  const main = document.querySelector('.check');
+  if (!main) return;
+
+  const div = document.createElement('div');
+  div.id = 'dropzone';
+  const span = document.createElement('span');
+
+  div.style.position = 'absolute';
+  div.style.border = '2px dotted grey';
+  div.style.display = 'flex';
+  div.style.justifyContent = 'center';
+  div.style.alignItems = 'center';
+  div.style.width = '480px';
+  div.style.height = '80%';
+
+  // span.style.width = '100%';
+  span.textContent = 'Drop here to add new links';
+  span.style.color = 'grey';
+  span.style.fontSize = '1rem';
+
+  div.appendChild(span);
+  main.appendChild(div);
+
+  if (main.childElementCount > 1) {
+    div.style.display = 'none';
+  } else {
+    div.style.display = 'block';
+  }
 }

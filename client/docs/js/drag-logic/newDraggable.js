@@ -110,8 +110,6 @@ function whatEleToReset(eleType, item, array) {
     ele.textContent += order; // if we want headers to not be deleted on update, they need to be unique on drop
   } else if (eleType === 'PANEL-ELE') {
     ele = uiDynamicPanel(copyLink, -order, array);
-  } else if (eleType === 'FILE-ELE') {
-    ele = uiDynamicFile(item, -order, array);
   }
 
   return ele;
