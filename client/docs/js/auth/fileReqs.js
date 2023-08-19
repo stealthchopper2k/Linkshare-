@@ -9,7 +9,7 @@ export async function addToDashboard(idToken, objectId, title) {
           Authorization: `Bearer ${idToken}`,
           body: JSON.stringify({ title: title }),
         },
-      }
+      },
     );
 
     if (!response.ok) {
@@ -32,7 +32,7 @@ export async function getStoredFiles(idToken) {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${idToken}`,
         },
-      }
+      },
     );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -54,7 +54,7 @@ export async function signedOutRequest(objectId) {
         headers: {
           'Content-Type': 'application/json',
         },
-      }
+      },
     );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -78,7 +78,7 @@ export async function signedInRequest(idToken, objectId) {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${idToken}`,
         },
-      }
+      },
     );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -112,7 +112,7 @@ export async function updateContent(idToken, objectId, links) {
           Authorization: `Bearer ${idToken}`,
         },
         body: JSON.stringify(file),
-      }
+      },
     );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -136,7 +136,7 @@ export async function updateFiles(idToken, files) {
           Authorization: `Bearer ${idToken}`,
         },
         body: JSON.stringify(files),
-      }
+      },
     );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -163,7 +163,7 @@ export async function updateFileRights(idToken, objectId, postObj) {
           Authorization: `Bearer ${idToken}`,
         },
         body: JSON.stringify(postObj),
-      }
+      },
     );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -187,7 +187,7 @@ export async function getFileRights(idToken, objectId) {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${idToken}`,
         },
-      }
+      },
     );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -199,17 +199,44 @@ export async function getFileRights(idToken, objectId) {
   }
 }
 
-export async function initiateNewLinkPage(idToken, index) {
+export async function initiateNewLinkPage(idToken, title, index) {
   try {
     const response = await fetch(
-      `https://europe-west2-linkshares.cloudfunctions.net/createfile?index=${index}`,
+      `https://europe-west2-linkshares.cloudfunctions.net/createfile?index=${index}&title=${title}`,
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${idToken}`,
         },
-      }
+      },
+    );
+    if (!response.ok) {
+      return { error: 'Page not found' };
+    }
+    const rights = await response.json();
+    return rights;
+  } catch (e) {
+    console.log(`${e}, User not signed in.`);
+  }
+}
+
+// emailNotification
+// @ sendingInfo obj
+// @ objectId string
+// @ email string
+export async function emailNotification(idToken, objectId, sendingInfo) {
+  try {
+    const response = await fetch(
+      `https://europe-west2-linkshares.cloudfunctions.net/emailnotification?objectId=${objectId}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${idToken}`,
+          body: JSON.stringify(sendingInfo),
+        },
+      },
     );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

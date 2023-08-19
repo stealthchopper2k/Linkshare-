@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <script defer src="/module/vanilla/index.js"></script>
-  </head>
+<html lang="en"><head><script defer src="/module/vanilla/index.js"></script></head>
   <meta charset="UTF-8" />
   <meta
     name="description"
@@ -13,9 +10,12 @@
 
   <title>Web Links</title>
 
+  <!-- <script type="module" src="./module/vanilla/index.js" defer async></script> -->
+  <!-- <link rel="shortcut icon" type="image/png" href="img/192.png" /> -->
   <link rel="manifest" href="manifest.json" />
   <!-- <link rel="apple-touch-icon" href="/img/rgb/192.png" /> -->
   <header>
+    <a href="/" class="home"><img class="homeimg" /></a>
     <div class="login">
       <div class="icon-wrapper">
         <img class="icon" />
@@ -132,7 +132,7 @@
       <div class="iconContainer" id="editrights">
         <div class="shareimg">
           <img class="share" />
-          <span>Share</span>
+          <span class="info">Share</span>
         </div>
         <div class="section-edit">
           <h3 class="rightsHeader">Grant Rights</h3>
@@ -151,7 +151,10 @@
             <span>Publicly Readable</span>
             <input type="checkbox" id="readType" name="scales" checked />
           </div>
-          <button class="confirmBtn">Confirm Changes</button>
+          <div class="btnHolder">
+            <!-- <button class="cancelBtn">Cancel</button> -->
+            <button class="confirmBtn">Confirm Changes</button>
+          </div>
         </div>
       </div>
     </template>
@@ -172,10 +175,10 @@
             <span class="text">Type Color : </span>
             <input type="color" class="color-type" tabindex="-1" />
           </div>
-          <div class="secondary-item">
+          <!-- <div class="secondary-item">
             <span class="text">Text Color :</span>
             <input type="color" class="color-refName" tabindex="-1" />
-          </div>
+          </div> -->
           <div class="secondary-item">
             <span class="names pub">Public: </span>
             <!-- tabIndex the inputs field that require a mouse click-->

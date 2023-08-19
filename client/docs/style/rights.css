@@ -4,65 +4,77 @@
 } */
 
 .shareimg {
-    display:flex;
-    align-items:center;
-    flex-direction:column;
-    cursor:pointer;
-  }
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  cursor: pointer;
+}
 
-  .rightsBox {
-    display:flex;
-    flex-direction:row;
-    cursor:pointer;
-    height:10%;
-    border-radius:5px;
-  }
-  
-  .section-edit {
-    background:white;
-    border:2px solid black;
-    border-radius:10px;
-    display:none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width:40%;
-    height:50%;
-    padding:10px;
-    color:black;
-  }
+.rightsBox {
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  height: 10%;
+  border-radius: 5px;
+}
 
-  .userList {
-    display:flex;
-    flex-direction:column;
-    padding:10px;
-    margin:auto;
-  }
+.section-edit {
+  background: white;
+  border: 2px solid black;
+  border-radius: 10px;
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+  height: 50%;
+  padding: 10px;
+  color: black;
+}
 
-  .readType {
-    display:flex;
-    flex-direction:row;
-  }
+.userList {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: auto;
+}
 
-  .rightsHeader {
-    padding:10px 0 10px 0;
-  }
+.readType {
+  display: flex;
+  flex-direction: row;
+}
 
-  .confirmBtn {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    padding:2%;
-    margin:2%
-  }
+.rightsHeader {
+  padding: 10px 0 10px 0;
+}
 
-  .userBox {
-    display:flex;
-    flex-direction:row;
-  }
+.btnHolder {
+  position: absolute;
+  display:flex;
+  right: 0;
+  bottom: 0;
+  padding: 2%;
+  margin: 2%;
+  gap: 2%;
+}
 
-  .emailInput {
-    display:flex;
-    width:80%;
-  }
+.cancelBtn {
+  padding: 2%;
+  margin: 2%;
+}
+
+.confirmBtn {
+  padding: 2%;
+  margin: 2%;
+}
+
+.userBox {
+  display: flex;
+  flex-direction: row;
+}
+
+.emailInput {
+  display: flex;
+  width: 80%;
+}

@@ -101,7 +101,7 @@ function handleTopicAndPanelDelete(links) {
   });
 }
 
-export function uiUtilityBar(data, page) {
+export function uiUtilityBar(links, pageData) {
   // remove bar if already there
   const ifExists = document.querySelector('.utilityBar');
   if (ifExists) ifExists.remove();
@@ -111,33 +111,31 @@ export function uiUtilityBar(data, page) {
   uiSyncComponent(specificContent);
   uiDeleteComponent(specificContent);
 
-  if (page === 'linkpage') {
-    const links = data.file.links;
-    handleTopicAndPanelDelete(links);
+  handleTopicAndPanelDelete(links);
 
-    if (auth.currentUser) {
-      const rights = data.fileInfo.rights;
-      rightsToComponents(rights, specificContent, data, links);
-    } else {
-      // todo add to local storage
-    }
+  if (auth.currentUser) {
+    rightsToComponents(specificContent, pageData, links);
+  } else {
+    // todo add to local storage
   }
 
   addUtilityImages();
 }
 
 // messy?
-function rightsToComponents(rights, specificContent, data, links) {
+function rightsToComponents(specificContent, pageData, links) {
+  const rights = pageData.rights;
+  const users = pageData.info.usersWithRights;
+  const readType = pageData.info.readType;
+
   const isOwner = rights === 'owner';
   const isEditor = rights === 'edit';
-
-  addComponent(links, specificContent, 'linkpage');
 
   if (isOwner || isEditor) {
     uiUpdateComponent(specificContent, links);
   }
 
-  if (isOwner) editRightsComponent(specificContent, data.fileInfo.info);
+  if (isOwner) editRightsComponent(specificContent, users, readType);
 }
 
 export function setLinkPageAdders(links) {

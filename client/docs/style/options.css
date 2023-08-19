@@ -86,3 +86,15 @@
   margin-top: 5px;
   text-align: center;
 }
+
+#newPagePopup {
+  display: flex;
+  flex-direction: row;
+  padding: 200px;
+  position: fixed;
+  justify-content: flexstart;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

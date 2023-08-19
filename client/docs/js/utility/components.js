@@ -72,24 +72,27 @@ function rightsBox(user, usersArray, select) {
   return newBox;
 }
 
-export function editRightsComponent(specificContent, file) {
+export function editRightsComponent(specificContent, users, read) {
   const editRightsDiv = specificContent.querySelector('#editrights');
   const select = specificContent.querySelector('.rightType');
 
-  document.querySelector('.utilityBar').append(editRightsDiv);
+  const utilityBar = document.querySelector('.utilityBar');
 
-  const usersWithRights = file.usersWithRights;
+  utilityBar.append(editRightsDiv);
+
+  const usersWithRights = JSON.parse(JSON.stringify(users));
   let pub;
 
   // FOR CANCEL BUTTON
-  const original = JSON.parse(JSON.stringify(usersWithRights));
+  const original = JSON.parse(JSON.stringify(users));
 
   const shareImg = editRightsDiv.querySelector('.shareimg');
   const sectionEdit = editRightsDiv.querySelector('.section-edit');
   const userList = editRightsDiv.querySelector('.userList');
   const readType = editRightsDiv.querySelector('#readType');
-  readType.checked = file.readType;
+  readType.checked = read;
 
+  // const cancelBtn = editRightsDiv.querySelector('.cancelBtn');
   const confirmBtn = editRightsDiv.querySelector('.confirmBtn');
   const emailInput = editRightsDiv.querySelector('.emailInput');
 
@@ -129,6 +132,14 @@ export function editRightsComponent(specificContent, file) {
       e.target.value = '';
     }
   });
+
+  // cancelBtn.addEventListener('click', async () => {
+  //   // Remove the existing section-edit element
+  //   const existingSectionEdit = editRightsDiv.querySelector('.section-edit');
+  //   existingSectionEdit.remove();
+
+  //   editRightsDiv.appendChild(cancelClone);
+  // });
 
   confirmBtn.addEventListener('click', async () => {
     const user = auth.currentUser;

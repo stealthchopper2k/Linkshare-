@@ -97,39 +97,92 @@ function setupEventListeners() {
   });
 }
 
-function makeLinkPage(cloudData) {
-  try {
-    const links = cloudData.file.links;
+function titleChange(newTitle) {
+  const title = document.querySelector('#title');
 
-    document.title = `${cloudData.file.title}`;
-    document.querySelector('#title').textContent = cloudData.file.title;
-
-    const url = getDataFileUrl();
-
-    rememberDataFile(cloudData.file.title, url);
-
-    ngrams = generateNGramIndex(links, GRAMSIZE);
-
-    uiAddLinks(links);
-    uiUtilityBar(cloudData, 'linkpage');
-  } catch (e) {
-    console.log(`${e}, error with gettting cloudData with onAuthStateChange`);
+  if (title) {
+    title.textContent = newTitle;
+    document.title = newTitle;
   }
+
+  return title.textContent;
 }
 
-async function handleNewPage(token) {
+function makeLinkPage(cloudData, title) {
+  console.log(cloudData);
+  if (!title) title = cloudData.file.title;
+  const links = cloudData.file.links;
+
+  const fileInfo = cloudData.fileInfo;
+
+  titleChange(title);
+
+  const url = getDataFileUrl();
+
+  rememberDataFile(title, url);
+
+  ngrams = generateNGramIndex(links, GRAMSIZE);
+
+  uiAddLinks(links);
+  uiUtilityBar(links, fileInfo);
+}
+
+function uiNewPagePopup(elem, token) {
+  const div = document.createElement('div');
+  const btn = document.createElement('button');
+  const h2 = document.createElement('h2');
+  const input = document.createElement('input');
+  const title = document.querySelector('#title');
+
+  let titleInput;
+
+  div.id = 'newPagePopup';
+
+  h2.textContent = 'New Page Title: ';
+
+  input.type = 'text';
+  input.placeholder = 'Title';
+  input.autofocus = true;
+
+  btn.addEventListener('click', () => {
+    titleInput = input.value;
+
+    if (title.length > 0) {
+      window.location.hash = `newFile?title=${titleInput}`;
+      handleNewPage(token);
+    } else {
+      input.style.border = '2px solid red';
+    }
+  });
+
+  div.append(h2, input, btn);
+  elem.append(div);
+}
+
+function getQuery() {
   // get query of index to file
   const queryString = window.location.hash.split('?')[1];
   const urlParams = new URLSearchParams(queryString);
 
   const index = urlParams.get('index');
+  const title = urlParams.get('title');
+  return { index, title };
+}
 
-  // send index to server to create new file and upload to bucket
-  const cloudData = await initiateNewLinkPage(token, index);
+async function handleNewPage(token) {
+  const params = getQuery();
 
-  // set window location to current page
-  window.location.hash = cloudData.newName;
-  makeLinkPage(cloudData);
+  const cloudData = await initiateNewLinkPage(
+    token,
+    params.title,
+    params.index,
+  );
+
+  if (!cloudData.error) {
+    makeLinkPage(cloudData);
+
+    window.location.hash = cloudData.newName;
+  }
 }
 
 // happens on load
@@ -142,7 +195,7 @@ onAuthStateChanged(auth, async (user) => {
     if (!user) window.location.href = '/login';
     const token = await user.getIdToken();
     initAuthUi(user);
-    handleNewPage(token);
+    uiNewPagePopup(document.body, token);
     return;
   }
 
@@ -156,8 +209,6 @@ onAuthStateChanged(auth, async (user) => {
     initAuthUi();
     cloudData = await signedOutRequest(objectId);
   }
-
-  console.log(cloudData);
 
   if (cloudData.error) {
     // TODO: Search bar or visit
@@ -186,7 +237,11 @@ export async function onHashChanged() {
       cloudData = await signedOutRequest(objectId);
     }
 
-    makeLinkPage(cloudData);
+    const links = cloudData.file.links;
+    const title = cloudData.file.title;
+    const fileInfo = cloudData.fileInfo;
+
+    makeLinkPage(links, title, fileInfo);
     observeMainChildCount();
   } catch (e) {
     console.log(`${e}, error with onHashChanged`);
