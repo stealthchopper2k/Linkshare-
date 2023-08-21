@@ -12,18 +12,18 @@ export default function App() {
   }, []);
 
   function pushRoute(currPath) {
-    if (currPath === 'signup') window.location.href = '/filepage.html/#newFile'; // first login ever
+    if (currPath === 'signup') window.location.href = '/filepage.html#newFile'; // first login ever
 
     const route = document.referrer;
     const referrerURL = new URL(route);
     const prevPath = referrerURL.pathname;
 
-    if (prevPath.includes('/filepage.html/#newFile')) {
+    if (prevPath.includes('/filepage.html#newFile')) {
       // if logging in and clicked create on main page
       window.location.href = route;
     }
 
-    if (currPath === 'login') window.location.href = '/filepage.html/'; // handle last visited page
+    if (currPath === 'login') window.location.href = '/filepage.html'; // handle last visited page
   }
 
   return (

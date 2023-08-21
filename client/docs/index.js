@@ -110,7 +110,6 @@ function titleChange(newTitle) {
 }
 
 function makeLinkPage(cloudData, title) {
-  console.log(cloudData);
   if (!title) title = cloudData.file.title;
   const links = cloudData.file.links;
 
@@ -119,13 +118,13 @@ function makeLinkPage(cloudData, title) {
   titleChange(title);
 
   const url = getDataFileUrl();
-
   rememberDataFile(title, url);
 
   ngrams = generateNGramIndex(links, GRAMSIZE);
 
   uiAddLinks(links);
   uiUtilityBar(links, fileInfo);
+  observeMainChildCount();
 }
 
 function getQuery() {
@@ -148,10 +147,14 @@ async function handleNewPage(token) {
   );
 
   if (!cloudData.error) {
+    window.location.hash = cloudData.newName; // hash before makeLinkPage
     makeLinkPage(cloudData);
-    window.location.hash = cloudData.newName;
 
-    await emailNotification(cloudData.newName, auth.currentUser.email);
+    await emailNotification(
+      token,
+      cloudData.newName,
+      await auth.currentUser.email,
+    );
   }
 }
 
@@ -190,7 +193,6 @@ onAuthStateChanged(auth, async (user) => {
     // search bar OR a list of files they have on their local storage
   } else if (!cloudData.error) {
     makeLinkPage(cloudData);
-    observeMainChildCount();
   }
 });
 
@@ -208,7 +210,6 @@ export async function onHashChanged() {
     }
 
     makeLinkPage(cloudData);
-    observeMainChildCount();
   } catch (e) {
     console.log(`${e}, error with onHashChanged`);
   }

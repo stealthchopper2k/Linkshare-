@@ -101,7 +101,7 @@ function handleTopicAndPanelDelete(links) {
   });
 }
 
-export function uiUtilityBar(links, pageData) {
+export function uiUtilityBar(links, fileInfo) {
   // remove bar if already there
   const ifExists = document.querySelector('.utilityBar');
   if (ifExists) ifExists.remove();
@@ -114,25 +114,24 @@ export function uiUtilityBar(links, pageData) {
   handleTopicAndPanelDelete(links);
 
   if (auth.currentUser) {
-    rightsToComponents(specificContent, pageData, links);
-  } else {
-    // todo add to local storage
+    rightsToComponents(specificContent, fileInfo, links);
   }
 
   addUtilityImages();
 }
 
 // messy?
-function rightsToComponents(specificContent, pageData, links) {
-  const rights = pageData.rights;
-  const users = pageData.info.usersWithRights;
-  const readType = pageData.info.readType;
+function rightsToComponents(specificContent, fileInfo, links) {
+  const rights = fileInfo.rights;
+  const users = fileInfo.info.usersWithRights;
+  const readType = fileInfo.info.readType;
 
   const isOwner = rights === 'owner';
   const isEditor = rights === 'edit';
 
   if (isOwner || isEditor) {
     uiUpdateComponent(specificContent, links);
+    addComponent(specificContent, links);
   }
 
   if (isOwner) editRightsComponent(specificContent, users, readType);

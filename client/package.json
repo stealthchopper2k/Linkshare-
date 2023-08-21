@@ -8,7 +8,6 @@
     "dev": "webpack --mode=development --watch",
     "webpack-dev-server": "webpack-dev-server",
     "start": "webpack-dev-server --mode=development",
-    "build": "node publish-links.js",
     "test": "http-server docs",
     "deploy": "firebase deploy --only hosting"
   },

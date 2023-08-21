@@ -3,15 +3,13 @@ import { droppable } from '../drag-logic/draggable.js';
 import { setLinkPageAdders } from './utilityBar.js';
 import { auth } from '../auth/google.js';
 
-export function addComponent(array, specificContent, page) {
+export function addComponent(specificContent, array) {
   // bar template and specific template
   const addDiv = specificContent.querySelector('#add');
   // append the add section to the bar
   document.querySelector('.utilityBar').append(addDiv);
   // brand new link (new instance is made in newDroppable export function)
-  if (page === 'linkpage') {
-    setLinkPageAdders(array);
-  }
+  setLinkPageAdders(array);
 }
 
 export function uiDeleteComponent(specificContent) {
@@ -81,13 +79,13 @@ export function editRightsComponent(specificContent, users, read) {
   utilityBar.append(editRightsDiv);
 
   const usersWithRights = JSON.parse(JSON.stringify(users));
-  let pub;
+  let pub = JSON.parse(JSON.stringify(read));
 
   const shareImg = editRightsDiv.querySelector('.shareimg');
   const sectionEdit = editRightsDiv.querySelector('.section-edit');
   const userList = editRightsDiv.querySelector('.userList');
   const readType = editRightsDiv.querySelector('#readType');
-  readType.checked = read;
+  readType.checked = pub;
 
   // const cancelBtn = editRightsDiv.querySelector('.cancelBtn');
   const confirmBtn = editRightsDiv.querySelector('.confirmBtn');
@@ -141,6 +139,7 @@ export function editRightsComponent(specificContent, users, read) {
       usersWithRights: usersWithRights,
       readType: pub,
     };
+
     await updateFileRights(user.accessToken, objectId, postObj);
   });
 }

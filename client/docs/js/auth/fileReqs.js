@@ -240,31 +240,8 @@ export async function emailNotification(idToken, objectId, email) {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const rights = await response.json();
-    return rights;
-  } catch (e) {
-    console.log(`${e}, User not signed in.`);
-  }
-}
-
-export async function emailChangedUsers(idToken, objectId, changedUsers) {
-  try {
-    const response = await fetch(
-      `https://europe-west2-linkshares.cloudfunctions.net/emailnotification?objectId=${objectId}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${idToken}`,
-          body: JSON.stringify({ changedUsers: changedUsers }),
-        },
-      },
-    );
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const rights = await response.json();
-    return rights;
+    const res = await response.json();
+    return res;
   } catch (e) {
     console.log(`${e}, User not signed in.`);
   }

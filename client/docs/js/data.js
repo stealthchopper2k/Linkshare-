@@ -12,8 +12,10 @@ export function getDataFileUrl() {
   // get it from fragment, store in local storage
   if (window.location.hash.length > 1) {
     const retval = `#${window.location.hash.substring(1)}`;
-    localStorage.dataFileUrl = retval;
-    return retval;
+    if (!retval.includes('newFile')) {
+      localStorage.dataFileUrl = retval;
+      return retval;
+    }
   }
 
   // if not there, get it from local storage
