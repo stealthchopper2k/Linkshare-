@@ -11,6 +11,7 @@ import {
   signedInRequest,
   signedOutRequest,
   initiateNewLinkPage,
+  emailNotification,
 } from './js/auth/fileReqs.js';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './js/auth/google.js';
@@ -127,38 +128,6 @@ function makeLinkPage(cloudData, title) {
   uiUtilityBar(links, fileInfo);
 }
 
-function uiNewPagePopup(elem, token) {
-  const div = document.createElement('div');
-  const btn = document.createElement('button');
-  const h2 = document.createElement('h2');
-  const input = document.createElement('input');
-  const title = document.querySelector('#title');
-
-  let titleInput;
-
-  div.id = 'newPagePopup';
-
-  h2.textContent = 'New Page Title: ';
-
-  input.type = 'text';
-  input.placeholder = 'Title';
-  input.autofocus = true;
-
-  btn.addEventListener('click', () => {
-    titleInput = input.value;
-
-    if (title.length > 0) {
-      window.location.hash = `newFile?title=${titleInput}`;
-      handleNewPage(token);
-    } else {
-      input.style.border = '2px solid red';
-    }
-  });
-
-  div.append(h2, input, btn);
-  elem.append(div);
-}
-
 function getQuery() {
   // get query of index to file
   const queryString = window.location.hash.split('?')[1];
@@ -180,8 +149,9 @@ async function handleNewPage(token) {
 
   if (!cloudData.error) {
     makeLinkPage(cloudData);
-
     window.location.hash = cloudData.newName;
+
+    await emailNotification(cloudData.newName, auth.currentUser.email);
   }
 }
 
@@ -195,7 +165,7 @@ onAuthStateChanged(auth, async (user) => {
     if (!user) window.location.href = '/login';
     const token = await user.getIdToken();
     initAuthUi(user);
-    uiNewPagePopup(document.body, token);
+    handleNewPage(token);
     return;
   }
 
@@ -237,11 +207,7 @@ export async function onHashChanged() {
       cloudData = await signedOutRequest(objectId);
     }
 
-    const links = cloudData.file.links;
-    const title = cloudData.file.title;
-    const fileInfo = cloudData.fileInfo;
-
-    makeLinkPage(links, title, fileInfo);
+    makeLinkPage(cloudData);
     observeMainChildCount();
   } catch (e) {
     console.log(`${e}, error with onHashChanged`);

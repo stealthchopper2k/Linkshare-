@@ -1,6 +1,6 @@
 import { updateContent, updateFileRights } from '../auth/fileReqs.js';
 import { droppable } from '../drag-logic/draggable.js';
-import { setLinkPageAdders, setFilePageAdders } from './utilityBar.js';
+import { setLinkPageAdders } from './utilityBar.js';
 import { auth } from '../auth/google.js';
 
 export function addComponent(array, specificContent, page) {
@@ -83,9 +83,6 @@ export function editRightsComponent(specificContent, users, read) {
   const usersWithRights = JSON.parse(JSON.stringify(users));
   let pub;
 
-  // FOR CANCEL BUTTON
-  const original = JSON.parse(JSON.stringify(users));
-
   const shareImg = editRightsDiv.querySelector('.shareimg');
   const sectionEdit = editRightsDiv.querySelector('.section-edit');
   const userList = editRightsDiv.querySelector('.userList');
@@ -133,14 +130,6 @@ export function editRightsComponent(specificContent, users, read) {
     }
   });
 
-  // cancelBtn.addEventListener('click', async () => {
-  //   // Remove the existing section-edit element
-  //   const existingSectionEdit = editRightsDiv.querySelector('.section-edit');
-  //   existingSectionEdit.remove();
-
-  //   editRightsDiv.appendChild(cancelClone);
-  // });
-
   confirmBtn.addEventListener('click', async () => {
     const user = auth.currentUser;
     const objectId = window.location.hash.substring(1);
@@ -152,7 +141,6 @@ export function editRightsComponent(specificContent, users, read) {
       usersWithRights: usersWithRights,
       readType: pub,
     };
-
     await updateFileRights(user.accessToken, objectId, postObj);
   });
 }

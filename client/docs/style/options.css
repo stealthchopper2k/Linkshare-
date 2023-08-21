@@ -87,10 +87,14 @@
   text-align: center;
 }
 
-#newPagePopup {
+/* #newPagePopup {
   display: flex;
+  background-color: #fff;
   flex-direction: row;
-  padding: 200px;
+  width: 15%;
+  height: 10%;
+  border-radius: 5px;
+  border: 1px solid black;
   position: fixed;
   justify-content: flexstart;
   align-items: center;
@@ -98,3 +102,21 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.newPagePopupTitle {
+  color: black;
+}
+
+.newPagePopupInput {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  font-size: 1em;
+  padding: 0 10px;
+}
+
+.newPagePopupInput:focus {
+  border: none;
+  outline: none;
+} */

@@ -40,7 +40,7 @@ export function googleSignIn() {
               'Content-Type': 'application/json',
               Authorization: `Bearer ${idToken}`,
             },
-          }
+          },
         );
 
         if (res.ok) {
