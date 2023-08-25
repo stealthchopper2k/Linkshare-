@@ -2,7 +2,9 @@
 const { onRequest } = require('firebase-functions/v2/https');
 const { getFirestore } = require('firebase-admin/firestore');
 const functions = require('firebase-functions');
-const cors = require('cors')({ origin: true });
+const cors = require('cors')({
+  origin: 'https://link-share.co.uk',
+});
 
 // Caution: New HTTP and HTTP callable functions deployed with any Firebase CLI lower than version 7.7.0 are private by default and throw HTTP 403 errors when invoked. Either explicitly make these functions public or update your Firebase CLI before you deploy any new functions.
 // Setting a default region gcloud config set functions/region europe-west1
@@ -10,6 +12,57 @@ const cors = require('cors')({ origin: true });
 const admin = require('firebase-admin');
 admin.initializeApp();
 
+exports.emailNotification = onRequest(
+  {
+    timeoutSeconds: 1200,
+    region: 'europe-west2',
+  },
+  (req, res) => {
+    cors(req, res, async () => {
+      try {
+        const nodemailer = require('nodemailer');
+
+        const transporter = nodemailer.createTransport({
+          service: 'Gmail',
+          auth: {
+            type: 'login',
+            user: 'warcraftmaximill@gmail.com',
+            pass: 'hmiwhtxmswhwiiuu',
+          },
+        });
+
+        const thedoc = req.query.objectId;
+        const email = req.query.email;
+
+        const info = await transporter.sendMail(
+          {
+            from: 'warcraftmaximill@gmail.com',
+            to: email,
+            subject: 'Linkshare Notification: Created File',
+            text: `You've created a new Linkshare, here is its ID in case you lose it! ${thedoc}.`,
+          },
+          (err, info) => {
+            if (err) {
+              console.log(err);
+              console.log(err.message);
+              return res.status(500).json({ error: 'Error sending mail' });
+            }
+            transporter.close();
+            return res
+              .status(200)
+              .json({ message: 'Mail sent', information: info });
+          },
+        );
+
+        console.log(info);
+      } catch (e) {
+        return res
+          .status(500)
+          .json({ error: 'Unexpected server Error sending Mail' });
+      }
+    });
+  },
+);
 // ADDFILEs
 exports.useraddedfiletodashboard = onRequest(
   { timeoutSeconds: 1200, region: ['europe-west2'] },
@@ -53,7 +106,7 @@ exports.useraddedfiletodashboard = onRequest(
         return res.status(500).json({ error: 'Error finding file. ' });
       }
     });
-  }
+  },
 );
 
 // REMOVEFILE
@@ -90,7 +143,7 @@ exports.userdeletefilefromdashboard = onRequest(
           .json({ err: 'Error deleting file from dashboard' });
       }
     });
-  }
+  },
 );
 
 // check that the only operation has been done is add or is same and not edit/delete
@@ -131,10 +184,11 @@ exports.editbucketfile = onRequest(
 
         const resultsBasedOnRights = (fileData) => {
           const editor = fileData.usersWithRights.some(
-            (obj) => obj.hasOwnProperty(userEmail) && obj[userEmail] === 'edit'
+            (obj) => obj.hasOwnProperty(userEmail) && obj[userEmail] === 'edit',
           );
           const owner = fileData.usersWithRights.some(
-            (obj) => obj.hasOwnProperty(userEmail) && obj[userEmail] === 'owner'
+            (obj) =>
+              obj.hasOwnProperty(userEmail) && obj[userEmail] === 'owner',
           );
 
           if (fileData.owners.includes(userEmail) || owner) {
@@ -164,7 +218,7 @@ exports.editbucketfile = onRequest(
         return res.status(500).json({ err: 'Error updating file on update' });
       }
     });
-  }
+  },
 );
 
 // If user is offline, check if the file is publicly readable
@@ -204,7 +258,7 @@ exports.getfilesuser = onRequest(
         return res.status(500).json({ err: 'Error getting user file' });
       }
     });
-  }
+  },
 );
 
 // return object to signed in user along with the permissions for the file (they are validated again based on the request made)
@@ -259,10 +313,11 @@ exports.signedinuser = onRequest(
           let info = null;
 
           const editor = fileData.usersWithRights.some(
-            (obj) => obj.hasOwnProperty(userEmail) && obj[userEmail] === 'edit'
+            (obj) => obj.hasOwnProperty(userEmail) && obj[userEmail] === 'edit',
           );
           const owner = fileData.usersWithRights.some(
-            (obj) => obj.hasOwnProperty(userEmail) && obj[userEmail] === 'owner'
+            (obj) =>
+              obj.hasOwnProperty(userEmail) && obj[userEmail] === 'owner',
           );
 
           if (fileData.owners.includes(userEmail) || owner) {
@@ -300,7 +355,7 @@ exports.signedinuser = onRequest(
           .json({ err: 'Error finding file user within document' });
       }
     });
-  }
+  },
 );
 
 // If new user signs in, the user is automatically added to the firebase auth system
@@ -348,7 +403,7 @@ exports.getuserfiles = onRequest(
           .json({ err: 'Error getting user dashboard data' });
       }
     });
-  }
+  },
 );
 
 exports.updatefilerights = onRequest(
@@ -380,7 +435,7 @@ exports.updatefilerights = onRequest(
         const fileData = file.docs[0].data();
 
         const owner = fileData.usersWithRights.some(
-          (obj) => obj.hasOwnProperty(userEmail) && obj[userEmail] === 'owner'
+          (obj) => obj.hasOwnProperty(userEmail) && obj[userEmail] === 'owner',
         );
 
         // fix if userswithrights included owner the change owner
@@ -401,7 +456,7 @@ exports.updatefilerights = onRequest(
         return res.status(500).json({ err: 'Error updating file rights' });
       }
     });
-  }
+  },
 );
 
 exports.updateuserfiles = onRequest(
@@ -431,7 +486,7 @@ exports.updateuserfiles = onRequest(
         return res.status(500).json({ err: 'Error updating user files' });
       }
     });
-  }
+  },
 );
 
 // set uuid for files
@@ -466,6 +521,7 @@ exports.createfile = onRequest(
         // limit filename to 8 characters
         const fileName = md5('hksd' + uniqueNumber).substring(0, 8);
         const index = parseInt(req.query.index);
+        const newTitle = req.query.title;
 
         // update the name, which is used as a link to the linkpage stored in user files array, points to new file in files collec
         const storedFiles = userDoc.data().storedFiles;
@@ -489,7 +545,7 @@ exports.createfile = onRequest(
         const fileInfo = {
           info: {
             file: fileName,
-            name: 'Title',
+            name: newTitle,
             owners: [userEmail],
             readType: true,
             usersWithRights: [],
@@ -504,7 +560,7 @@ exports.createfile = onRequest(
         const linkObject = {
           links: [],
           publicationTime: '',
-          title: 'Title',
+          title: newTitle,
         };
 
         const contents = JSON.stringify(linkObject);
@@ -525,5 +581,5 @@ exports.createfile = onRequest(
         return res.status(500).json({ err: 'Error initiating user file' });
       }
     });
-  }
+  },
 );

@@ -57,12 +57,7 @@ export function googleSignIn() {
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.customData.email;
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      console.log(errorCode, errorMessage, email, credential);
-      return { errorCode, errorMessage, email, credential };
+      return { success: false, code: errorMessage, message: errorCode };
     });
 }
 
@@ -81,7 +76,7 @@ export function signUpForm(email, password) {
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
-      return user;
+      return { success: true, message: 'Email sent' };
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -96,7 +91,7 @@ export function signInForm(email, password) {
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
-      return user;
+      return { success: true, message: 'Email sent' };
     })
     .catch((error) => {
       const errorCode = error.code;
