@@ -221,4 +221,8 @@ window.addEventListener('hashchange', (e) => {
   onHashChanged();
 });
 
+document.addEventListener('DOMContentLoaded', (e) => {
+  onHashChanged();
+});
+
 document.addEventListener('DOMContentLoaded', setupEventListeners);

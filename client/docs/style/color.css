@@ -52,3 +52,30 @@
     --c6bg: var(--panelfg);
   }
 }
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: rgb(38, 35, 44);
+    --text: #ffffff;
+    --fg: #ccc;
+    --subtle: rgba(255, 255, 255, 0.25);
+    --hoverhighlight: rgba(255, 255, 255, 0.25);
+    --focushighlight: rgba(255, 255, 0, 0.4);
+    --uopblue: #00a0ff;
+    --panelbg: rgba(255, 255, 255, 0.1);
+    --panelfg: var(--fg);
+    --panelfgvisited: var(--fg);
+    --c1: hsla(10, 100%, 30%, 0.5);
+    --c1bg: var(--panelfg);
+    --c2: hsla(60, 100%, 40%, 0.5);
+    --c2bg: var(--panelfg);
+    --c3: hsla(40, 100%, 60%, 0.5);
+    --c3bg: var(--panelfg);
+    --c4: hsla(230, 100%, 30%, 0.5);
+    --c4bg: var(--panelfg);
+    --c5: hsla(130, 100%, 20%, 0.5);
+    --c5bg: var(--panelfg);
+    --c6: rgb(0, 121, 193, 0.5); /* #roadsignblue */
+    --c6bg: var(--panelfg);
+  }
+}

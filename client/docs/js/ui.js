@@ -3,7 +3,6 @@ import { draggable, droppable } from './drag-logic/draggable.js';
 import { editElement } from './json-logic/helper.js';
 import { Panel } from './json-logic/pan-ele.js'; //eslint-disable-line
 import { dragOverAddPlaceHolder } from './drag-logic/drag-placeholder.js';
-import PlusImg from '../images/plus.png?as=webp';
 
 export function uiCreateTopic(name, order) {
   const d = document.createElement('h2');
@@ -121,19 +120,10 @@ function showDroppableMain() {
   const div = document.createElement('div');
   div.id = 'dropzone';
   const span = document.createElement('span');
-
-  div.style.position = 'absolute';
-  div.style.border = '2px dotted grey';
-  div.style.display = 'flex';
-  div.style.justifyContent = 'center';
-  div.style.alignItems = 'center';
-  div.style.width = '480px';
-  div.style.height = '80%';
+  span.id = 'note';
 
   // span.style.width = '100%';
   span.textContent = 'Drop here to add new links';
-  span.style.color = 'grey';
-  span.style.fontSize = '1rem';
 
   div.appendChild(span);
   main.appendChild(div);
@@ -141,6 +131,6 @@ function showDroppableMain() {
   if (main.childElementCount > 1) {
     div.style.display = 'none';
   } else {
-    div.style.display = 'block';
+    div.style.display = 'flex';
   }
 }
