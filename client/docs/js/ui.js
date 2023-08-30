@@ -3,6 +3,7 @@ import { draggable, droppable } from './drag-logic/draggable.js';
 import { editElement } from './json-logic/helper.js';
 import { Panel } from './json-logic/pan-ele.js'; //eslint-disable-line
 import { dragOverAddPlaceHolder } from './drag-logic/drag-placeholder.js';
+import HomeImg from '../../images/home.svg?as=webp';
 
 export function uiCreateTopic(name, order) {
   const d = document.createElement('h2');
@@ -111,6 +112,12 @@ export function observeMainChildCount() {
 
   const observer = new MutationObserver(callback);
   observer.observe(main, { childList: true });
+}
+
+export function homeImg() {
+  const homeimg = document.querySelector('.homeimg');
+
+  homeimg.src = HomeImg;
 }
 
 function showDroppableMain() {

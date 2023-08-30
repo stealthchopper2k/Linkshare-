@@ -199,10 +199,10 @@ export async function getFileRights(idToken, objectId) {
   }
 }
 
-export async function initiateNewLinkPage(idToken, title, index) {
+export async function initiateNewLinkPage(idToken, index) {
   try {
     const response = await fetch(
-      `https://europe-west2-linkshares.cloudfunctions.net/createfile?index=${index}&title=${title}`,
+      `https://europe-west2-linkshares.cloudfunctions.net/createfile?index=${index}`,
       {
         method: 'POST',
         headers: {
@@ -216,32 +216,6 @@ export async function initiateNewLinkPage(idToken, title, index) {
     }
     const rights = await response.json();
     return rights;
-  } catch (e) {
-    console.log(`${e}, User not signed in.`);
-  }
-}
-
-// emailNotification
-// @ sendingInfo obj
-// @ objectId string
-// @ email string
-export async function emailNotification(idToken, objectId, email) {
-  try {
-    const response = await fetch(
-      `https://europe-west2-linkshares.cloudfunctions.net/emailnotification?objectId=${objectId}&email=${email}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${idToken}`,
-        },
-      },
-    );
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const res = await response.json();
-    return res;
   } catch (e) {
     console.log(`${e}, User not signed in.`);
   }

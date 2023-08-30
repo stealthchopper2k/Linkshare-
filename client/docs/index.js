@@ -2,11 +2,11 @@ import {
   uiAddLinks,
   uiPopulateDataSelector,
   observeMainChildCount,
+  homeImg,
 } from './js/ui.js';
 import { uiUtilityBar } from './js/utility/utilityBar.js';
 import { getDataFileUrl, nudgeDataFile, rememberDataFile } from './js/data.js';
 import { sortBy, score, generateNGramIndex } from './js/ordering.js';
-import { initAuthUi } from './js/auth/authUi.js';
 import {
   signedInRequest,
   signedOutRequest,
@@ -95,6 +95,7 @@ function setupEventListeners() {
 
   document.querySelector('#filter').addEventListener('input', () => {
     updateContent(false);
+    homeImg();
   });
 }
 
@@ -109,11 +110,10 @@ function titleChange(newTitle) {
   return title.textContent;
 }
 
-function makeLinkPage(cloudData, title) {
-  if (!title) title = cloudData.file.title;
+function makeLinkPage(cloudData) {
   const links = cloudData.file.links;
-
   const fileInfo = cloudData.fileInfo;
+  const title = cloudData.file.title;
 
   titleChange(title);
 
@@ -123,8 +123,11 @@ function makeLinkPage(cloudData, title) {
   ngrams = generateNGramIndex(links, GRAMSIZE);
 
   uiAddLinks(links);
-  uiUtilityBar(links, fileInfo);
-  observeMainChildCount();
+
+  if (cloudData.fileInfo !== null) {
+    uiUtilityBar(links, fileInfo);
+    observeMainChildCount();
+  }
 }
 
 function getQuery() {
@@ -133,33 +136,20 @@ function getQuery() {
   const urlParams = new URLSearchParams(queryString);
 
   const index = urlParams.get('index');
-  const title = urlParams.get('title');
-  return { index, title };
+  return { index };
 }
 
 async function handleNewPage(token) {
   const params = getQuery();
 
-  const cloudData = await initiateNewLinkPage(
-    token,
-    params.title,
-    params.index,
-  );
+  const cloudData = await initiateNewLinkPage(token, params.index);
 
   if (!cloudData.error) {
     window.location.hash = cloudData.newName; // hash before makeLinkPage
     makeLinkPage(cloudData);
-
-    await emailNotification(
-      token,
-      cloudData.newName,
-      await auth.currentUser.email,
-    );
   }
 }
 
-// happens on load
-// TODO reauthenticate user redirect
 onAuthStateChanged(auth, async (user) => {
   const objectId = window.location.hash.substring(1);
   uiPopulateDataSelector();
@@ -167,7 +157,6 @@ onAuthStateChanged(auth, async (user) => {
   if (objectId.includes('newFile')) {
     if (!user) window.location.href = '/login';
     const token = await user.getIdToken();
-    initAuthUi(user);
     handleNewPage(token);
     return;
   }
@@ -176,10 +165,8 @@ onAuthStateChanged(auth, async (user) => {
 
   if (user) {
     const token = await user.getIdToken(); // fresh firebase token automatically refreshed
-    initAuthUi(user);
     cloudData = await signedInRequest(token, objectId);
   } else {
-    initAuthUi();
     cloudData = await signedOutRequest(objectId);
   }
 
@@ -197,32 +184,35 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 export async function onHashChanged() {
-  const user = await auth.currentUser;
+  const user = auth.currentUser;
   const objectId = window.location.hash.substring(1);
   let cloudData;
 
   try {
     if (user) {
       const token = await user.getIdToken();
+      if (objectId.includes('newFile')) {
+        handleNewPage(token);
+        return;
+      }
       cloudData = await signedInRequest(token, objectId);
     } else {
       cloudData = await signedOutRequest(objectId);
     }
+    if (cloudData.error) {
+      // TODO: Search bar or visit
+      const title = document.querySelector('#title');
+      const input = document.querySelector('#filter');
+      input.style.display = 'none';
 
-    makeLinkPage(cloudData);
+      title.textContent = `${cloudData.error} :(`;
+      // search bar OR a list of files they have on their local storage
+    } else if (!cloudData.error) {
+      makeLinkPage(cloudData);
+    }
   } catch (e) {
     console.log(`${e}, error with onHashChanged`);
   }
 }
-
-window.addEventListener('hashchange', (e) => {
-  // if we just came from a newFile page, we dont need to refetch any data
-  if (e.oldURL.includes('newFile')) return;
-  onHashChanged();
-});
-
-document.addEventListener('DOMContentLoaded', (e) => {
-  onHashChanged();
-});
 
 document.addEventListener('DOMContentLoaded', setupEventListeners);

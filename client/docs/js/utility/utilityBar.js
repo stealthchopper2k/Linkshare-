@@ -106,18 +106,18 @@ export function uiUtilityBar(links, fileInfo) {
   const ifExists = document.querySelector('.utilityBar');
   if (ifExists) ifExists.remove();
 
-  const specificContent = setUtilityTemplate();
+  if (fileInfo.rights === 'owner' || fileInfo.rights === 'edit') {
+    const specificContent = setUtilityTemplate();
 
-  uiSyncComponent(specificContent);
-  uiDeleteComponent(specificContent);
+    uiSyncComponent(specificContent);
+    uiDeleteComponent(specificContent);
 
-  handleTopicAndPanelDelete(links);
+    handleTopicAndPanelDelete(links);
 
-  if (auth.currentUser) {
     rightsToComponents(specificContent, fileInfo, links);
-  }
 
-  addUtilityImages();
+    addUtilityImages();
+  }
 }
 
 // messy?

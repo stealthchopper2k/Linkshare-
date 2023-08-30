@@ -8,7 +8,8 @@ function createKeywordSpan(keyword) {
 function handleRemove(span, keywords, keyword) {
   span.addEventListener('click', () => {
     const index = keywords.indexOf(keyword);
-    if (index >= 0) { // if exists
+    if (index >= 0) {
+      // if exists
       keywords.splice(index, 1);
     }
     span.remove();
