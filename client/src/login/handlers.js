@@ -7,6 +7,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
+  sendEmailVerification,
 } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -61,14 +62,13 @@ export function googleSignIn() {
     });
 }
 
-export function signOutGoogle() {
-  return signOut(auth)
+export async function signOutGoogle() {
+  await signOut(auth)
     .then(() => {
       console.log('signed out');
     })
     .catch((error) => {
       console.log(error);
-      // An error happened.
     });
 }
 export function signUpForm(email, password) {
@@ -81,7 +81,18 @@ export function signUpForm(email, password) {
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.log(errorMessage);
+      return { success: false, code: errorMessage, message: errorCode };
+    });
+}
+
+export function verifyEmail() {
+  return sendEmailVerification(auth.currentUser)
+    .then(() => {
+      return { success: true, message: 'Email sent' };
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
       return { success: false, code: errorMessage, message: errorCode };
     });
 }

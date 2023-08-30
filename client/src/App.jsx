@@ -7,12 +7,8 @@ import HomePage from './home/home.jsx';
 import './style.css';
 
 export default function App() {
-  useEffect(() => {
-    // document.body.style.backgroundColor = 'black';
-  }, []);
-
   function pushRoute(currPath) {
-    if (currPath === 'signup') window.location.href = '/filepage#newFile'; // first login ever
+    if (currPath === 'signup') window.location.href = '/login'; // first login ever
 
     const route = document.referrer;
     const referrerURL = new URL(route);
@@ -23,7 +19,7 @@ export default function App() {
       window.location.href = route;
     }
 
-    if (currPath === 'login') window.location.href = '/filepage'; // handle last visited page
+    if (currPath === 'login') window.location.href = '/filepage#newFile'; // handle last visited page
   }
 
   return (
