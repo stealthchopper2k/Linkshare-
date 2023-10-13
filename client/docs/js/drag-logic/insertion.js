@@ -29,10 +29,8 @@ export function insertLeftOrRight(item, element, e) {
 export function insertTopOrBottom(item, element, e) {
   const topOrBot = topOrBottomOfElement(e, element);
   if (topOrBot) {
-    console.log(item);
     element.parentNode.insertBefore(item, element);
   } else {
-    console.log(item);
     insertAfter(item, element);
   }
 }

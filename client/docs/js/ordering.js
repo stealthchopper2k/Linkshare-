@@ -60,7 +60,6 @@ export function score(text) {
     } else {
       // new
       const e = document.querySelector('.theurlthingthatactuallymatters');
-      console.log(e);
       e.parentElement.dataset.score = scores[url];
     }
   });
@@ -76,7 +75,6 @@ export function score(text) {
     // hide non-matches if there was some input
     const hide = document.querySelectorAll('main [data-score="0"]');
     const show = document.querySelectorAll('main :not([data-score="0"])');
-    console.log(show);
     hide.forEach((r) => {
       r.dataset.matched = false;
     });

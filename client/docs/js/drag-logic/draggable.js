@@ -127,7 +127,6 @@ export function syncUiToArray(links, panels) {
     const currPanel = panels[i];
     links[i].topic = getPrecedingH2Name(currPanel);
   }
-  console.log(links);
 }
 
 export function dragStart(e) {

@@ -11,7 +11,6 @@ import {
   signedInRequest,
   signedOutRequest,
   initiateNewLinkPage,
-  emailNotification,
 } from './js/auth/fileReqs.js';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './js/auth/google.js';
@@ -62,6 +61,8 @@ function setupEventListeners() {
    * Monitor keypresses and update datasets so (based on CSS)
    * content can be made invisible.
    */
+  homeImg();
+
   window.addEventListener('keyup', (k) => {
     const filter = document.querySelector('#filter');
     const focus = document.querySelector(':focus');
@@ -95,7 +96,6 @@ function setupEventListeners() {
 
   document.querySelector('#filter').addEventListener('input', () => {
     updateContent(false);
-    homeImg();
   });
 }
 

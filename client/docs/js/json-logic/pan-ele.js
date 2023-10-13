@@ -152,7 +152,7 @@ export class Panel extends HTMLElement {
     const typeInput = editorPanel.querySelector('.type');
     const textInput = editorPanel.querySelector('.refInput');
     const hrefInput = editorPanel.querySelector(
-      '.theurlthingthatactuallymatters'
+      '.theurlthingthatactuallymatters',
     );
     const pubInput = editorPanel.querySelector('.pub-checkbox');
     const confirmBtn = editorPanel.querySelector('.confirm');
@@ -192,7 +192,6 @@ export class Panel extends HTMLElement {
 
     hrefInput.addEventListener('input', (e) => {
       this.link.href = hrefInput.value;
-      console.log(this.link.href);
     });
 
     // Drag and Drop for URL input field

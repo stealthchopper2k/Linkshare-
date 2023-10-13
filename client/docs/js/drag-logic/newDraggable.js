@@ -70,7 +70,6 @@ function updateArrayForFile(files, file, div) {
   const position = uiPosition(main, 'FILE-ELE', div);
   div.classList.remove('new');
   files.splice(position, 0, file);
-  console.log(files);
   return files;
 }
 
@@ -80,7 +79,6 @@ function updateArrayForLink(array, link, div) {
   div.classList.remove('new');
   link.topic = getPrecedingH2Name(div);
   array.splice(position, 0, link);
-  console.log(array);
   return array;
 }
 

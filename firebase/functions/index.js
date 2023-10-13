@@ -324,7 +324,6 @@ exports.signedinuser = onRequest(
             info = { rights: 'owner', info: fileData }; // owner right = all data
           } else if (editor) {
             // some rights
-            const rights = fileData.usersWithRights[userEmail];
 
             info = { rights: 'edit' }; // only rights fetched
           } else if (fileData.readType === true) {

@@ -61,7 +61,6 @@ function rightsBox(user, usersArray, select) {
     if (e.target.value === 'remove') {
       newBox.remove();
       usersArray.splice(usersArray.indexOf(user), 1);
-      console.log(usersArray);
     } else {
       user[email] = e.target.value;
     }

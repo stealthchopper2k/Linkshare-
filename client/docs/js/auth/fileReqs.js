@@ -118,7 +118,6 @@ export async function updateContent(idToken, objectId, links) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (e) {
     console.log(`${e}, User not signed in.`);

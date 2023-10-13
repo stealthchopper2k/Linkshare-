@@ -9,7 +9,7 @@ export default function FrontPage() {
           <h1 className="text-5xl md:text-7xl font-semibold mb-6">
             Designated URL pages at your Fingertips!
           </h1>
-          <span className="text-2xl md:text-xl mb-8">
+          <span className="text-2xl text-white mt-2 md:text-xl mb-8">
             Create and collaborate on improved hyperlink collections!
           </span>
         </div>

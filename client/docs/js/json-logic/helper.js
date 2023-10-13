@@ -30,7 +30,6 @@ export function removeSubsequentElements(topic) {
 // for headers, on change, it needs to reflect in the links after header position
 export function editElement(ele, links) {
   ele.addEventListener('dblclick', (e) => {
-    console.log(e.target);
     ele.setAttribute('draggable', 'false');
     ele.focus();
     ele.setAttribute('contenteditable', 'true');
@@ -41,7 +40,8 @@ export function editElement(ele, links) {
       e.preventDefault();
       ele.blur();
       // when name changes, change the links titles
-      if (ele.tagName === 'H2') { // on enter set new topic that was edited
+      if (ele.tagName === 'H2') {
+        // on enter set new topic that was edited
         const panels = getMainUi('PANEL-ELE');
         syncUiToArray(links, panels);
       }
@@ -63,7 +63,10 @@ export function getMainUi(uiType) {
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
 // need to compare positions
 export function uiPosition(parent, child, element) {
-  const index = Array.prototype.indexOf.call(parent.querySelectorAll(child), element);
+  const index = Array.prototype.indexOf.call(
+    parent.querySelectorAll(child),
+    element,
+  );
   return index;
 }
 
@@ -92,7 +95,7 @@ export function applyCSS(originalColor, item, array, id) {
   const main = document.querySelector('main');
 
   const typeElements = main.querySelectorAll(`.${item.type}`);
-  const sameTypeLinks = array.filter(link => link.type === item.type);
+  const sameTypeLinks = array.filter((link) => link.type === item.type);
 
   const colorChanged = item.typeColor !== originalColor;
   const notChanged = item.typeColor === originalColor;
@@ -107,7 +110,9 @@ export function applyCSS(originalColor, item, array, id) {
   } else if (notChanged) {
     const ele = document.querySelector(`[id="${id}"]`).querySelector('.type');
     // find first instance of the type that is not equal to the default white color
-    const firstCol = sameTypeLinks.find(link => link.typeColor !== originalColor);
+    const firstCol = sameTypeLinks.find(
+      (link) => link.typeColor !== originalColor,
+    );
     if (!firstCol) return;
     ele.style.backgroundColor = firstCol.typeColor;
     item.typeColor = firstCol.typeColor;

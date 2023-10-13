@@ -4,9 +4,12 @@ import SignUp from './login/signup.jsx';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ResetPassword from './login/reset.jsx';
 import HomePage from './home/home.jsx';
+import { useDeviceContext } from './MobileContext';
 import './style.css';
 
 export default function App() {
+  const isMobile = useDeviceContext();
+
   function pushRoute(currPath) {
     if (currPath === 'signup') window.location.href = '/login'; // first login ever
 
@@ -19,7 +22,11 @@ export default function App() {
       window.location.href = route;
     }
 
-    if (currPath === 'login') window.location.href = '/filepage#newFile'; // handle last visited page
+    if (isMobile && currPath === 'login') {
+      window.location.href = '/';
+    } else if (!isMobile && currPath === 'login') {
+      window.location.href = '/filepage#newFile';
+    }
   }
 
   return (
