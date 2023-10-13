@@ -24,29 +24,6 @@ const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
 export const auth = getAuth();
 
-// try {
-//   const idToken = await auth.currentUser.getIdToken();
-//   const res = await fetch(
-//     'https://europe-west2-linkshares.cloudfunctions.net/getuserfiles',
-//     {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Authorization: `Bearer ${idToken}`,
-//       },
-//     }
-//   );
-
-//   if (res.ok) {
-//     const data = await res.json();
-//     return { data, user };
-//   } else {
-//     return { success: false, message: 'Error', status: res.status };
-//   }
-// } catch (e) {
-//   console.log(e, 'Error with getting User File');
-// }
-
 // this is used to get the owners google api token to use for getting their email list in Share input
 export function googleSignIn() {
   return signInWithPopup(auth, provider)
