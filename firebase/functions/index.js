@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-unresolved
 const { onRequest } = require('firebase-functions/v2/https');
 const { getFirestore } = require('firebase-admin/firestore');
+require('dotenv').config();
 const functions = require('firebase-functions');
 const cors = require('cors')({
   origin: 'https://link-share.co.uk',
@@ -12,7 +13,7 @@ const cors = require('cors')({
 const admin = require('firebase-admin');
 admin.initializeApp();
 
-exports.emailNotification = onRequest(
+exports.emailnotification = onRequest(
   {
     timeoutSeconds: 1200,
     region: 'europe-west2',
@@ -20,27 +21,29 @@ exports.emailNotification = onRequest(
   (req, res) => {
     cors(req, res, async () => {
       try {
-        const nodemailer = require('nodemailer');
-
-        const transporter = nodemailer.createTransport({
-          service: 'Gmail',
-          auth: {
-            type: 'login',
-            user: 'warcraftmaximill@gmail.com',
-            pass: 'hmiwhtxmswhwiiuu',
-          },
-        });
-
+        let nodemailer = require('nodemailer');
         const thedoc = req.query.objectId;
         const email = req.query.email;
 
-        const info = await transporter.sendMail(
-          {
-            from: 'warcraftmaximill@gmail.com',
-            to: email,
-            subject: 'Linkshare Notification: Created File',
-            text: `You've created a new Linkshare, here is its ID in case you lose it! ${thedoc}.`,
+        const transporter = nodemailer.createTransport({
+          host: 'smtp.gmail.com',
+          port: 465,
+          secure: true,
+          auth: {
+            user: 'mrjefimov@gmail.com',
+            pass: process.env.GOOGLE,
           },
+        });
+
+        const mailOptions = {
+          from: 'mrjefimov@gmail.com',
+          to: email,
+          subject: 'You recently created a Link-Share file!',
+          text: `Here is the file ID to remember!: ${thedoc}`
+        };
+
+        transporter.sendMail(
+          mailOptions,
           (err, info) => {
             if (err) {
               console.log(err);
@@ -53,8 +56,6 @@ exports.emailNotification = onRequest(
               .json({ message: 'Mail sent', information: info });
           },
         );
-
-        console.log(info);
       } catch (e) {
         return res
           .status(500)
@@ -490,6 +491,7 @@ exports.updateuserfiles = onRequest(
 
 // set uuid for files
 // If new user signs in, the user is automatically added to the firebase auth system
+// FIXME this is way too large and hard to read
 exports.createfile = onRequest(
   { timeoutSeconds: 1200, region: ['europe-west2'] },
   (req, res) => {
@@ -524,8 +526,6 @@ exports.createfile = onRequest(
 
         // update the name, which is used as a link to the linkpage stored in user files array, points to new file in files collec
         const storedFiles = userDoc.data().storedFiles;
-
-        console.log(storedFiles, index);
 
         // of doesnt exist, create it
         if (!isNaN(index) && !storedFiles[index]) {
@@ -568,6 +568,23 @@ exports.createfile = onRequest(
           .save(contents, { contentType: 'application/json' });
 
         console.log(`${fileName} uploaded to link-share.json`, uploadToBucket);
+
+        // const response = await fetch(
+        //   'https://europe-west2-linkshares.cloudfunctions.net/updateuserfiles',
+        //   {
+        //     method: 'POST',
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //       Authorization: `Bearer ${idToken}`,
+        //     },
+        //     body: JSON.stringify(files),
+        //   },
+
+        const sendMail = await fetch(`https://europe-west2-linkshares.cloudfunctions.net/updateuserfiles/emailnotification?objectId=${uniqueNumber}?email=${userEmail}`);
+
+        const mailRes = await sendMail.json();
+
+        console.log(mailRes);
 
         return res.status(200).json({
           file: linkObject,
